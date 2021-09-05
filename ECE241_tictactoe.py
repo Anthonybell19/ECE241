@@ -29,10 +29,13 @@ while not winner:
 
     try:
         choice = int(input(">> "))
-
-    except IndexError as e:
+        if choice > 9 or choice < 1:
+            raise IndexError
+    except IndexError:
         print("please enter a valid field")
         continue
+
+
 
     if choices[choice - 1] == 'X' or choices[choice - 1] == 'O':
         print("illegal move, please try again")
