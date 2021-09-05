@@ -7,6 +7,7 @@ for x in range(1, 10):
 
 playerOneTurn = True
 winner = False
+counter = 0
 
 
 def printBoard():
@@ -43,9 +44,10 @@ while not winner:
 
     if playerOneTurn:
         choices[choice - 1] = 'X'
+        counter+=1
     else:
         choices[choice - 1] = 'O'
-
+        counter+=1
     playerOneTurn = not playerOneTurn
 
     for x in range(0, 3):
@@ -57,9 +59,14 @@ while not winner:
             winner = True
             printBoard()
 
+
     if((choices[0] == choices[4] and choices[0] == choices[8]) or
        (choices[2] == choices[4] and choices[4] == choices[6])):
-        winner = true
+        winner = True
         printBoard()
 
-print("Player " + str(int(playerOneTurn + 1)) + " wins!\n")
+    if counter == len(choices) and winner!= True:
+        print('No winner')
+        break
+if winner:
+    print("Player " + str(int(playerOneTurn + 1)) + " wins!\n")
