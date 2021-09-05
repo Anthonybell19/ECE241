@@ -35,7 +35,6 @@ class Hw1q1:
             seconds = ''
 
         print(days + ' ' + hours + ' ' + minutes + ' ' + seconds)
-
 class Hw1q2:
     def monomial(a: float, b: float, c: float):
         x = (c + 2 * b) / a
