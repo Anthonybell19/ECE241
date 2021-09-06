@@ -1,4 +1,4 @@
-class Hw1q1:
+class Hw1Q1:
     def timeConvert(input_second : int):
         if (input_second//86400) > 1:
             days = (input_second//86400).__str__() + ' days,'
