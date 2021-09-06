@@ -12,7 +12,7 @@ class Hw1Q1:
         if (input_second//3600) > 1:
             hours = (input_second//3600).__str__() + ' hours,'
         elif (input_second//3600) == 1:
-            hours = (input_second//3600).__str__() + ' hours,'
+            hours = (input_second//3600).__str__() + ' hour'
         else:
             hours = ''
 
@@ -28,9 +28,9 @@ class Hw1Q1:
         input_second = (input_second % 60)
 
         if input_second > 1:
-            seconds = input_second.__str__() + ' seconds.'
+            seconds = input_second.__str__() + ' seconds'
         elif input_second == 1:
-            seconds = input_second.__str__() + ' second.'
+            seconds = input_second.__str__() + ' second'
         else:
             seconds = ''
 
