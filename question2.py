@@ -7,8 +7,11 @@ class Hw1q2:
         x = (c**2 - 2 * b) / a
         return x
 def main():
-    print(Hw1q2.monomial(1, 1, 4))
-    print(Hw1q2.polynomial(1, 1, 4))
+    a = float(input('input A '))
+    b = float(input('input B '))
+    c = float(input('input C '))
+    # print(Hw1q2.monomial(a, b, c))
+    print(Hw1q2.polynomial(a, b, c))
 
 
 # __name__

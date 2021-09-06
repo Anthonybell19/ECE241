@@ -4,7 +4,6 @@ choices = []
 for x in range(1, 10):
     choices.append(x.__str__())
 
-
 playerOneTurn = True
 winner = False
 counter = 0
@@ -36,18 +35,16 @@ while not winner:
         print("please enter a valid field")
         continue
 
-
-
     if choices[choice - 1] == 'X' or choices[choice - 1] == 'O':
         print("illegal move, please try again")
         continue
 
     if playerOneTurn:
         choices[choice - 1] = 'X'
-        counter+=1
+        counter += 1
     else:
         choices[choice - 1] = 'O'
-        counter+=1
+        counter += 1
     playerOneTurn = not playerOneTurn
 
     for x in range(0, 3):
@@ -59,13 +56,13 @@ while not winner:
             winner = True
             printBoard()
 
-
-    if((choices[0] == choices[4] and choices[0] == choices[8]) or
-       (choices[2] == choices[4] and choices[4] == choices[6])):
+    if ((choices[0] == choices[4] and choices[0] == choices[8]) or
+            (choices[2] == choices[4] and choices[4] == choices[6])):
         winner = True
         printBoard()
 
-    if counter == len(choices) and winner!= True:
+    if counter == len(choices) and winner != True:
+        printBoard()
         print('No winner')
         break
 if winner:
