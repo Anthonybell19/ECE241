@@ -46,14 +46,17 @@ class QuestionThree(object):
         :param alist: list with max. temp. data
         :return: highest temp and the index
         """
-        for i in range(len(alist)-1,0,-1):
+        for i in range(len(alist)):
             for j in range(i):
                 if alist[j] > alist[j+1]:
                     placeholder = alist[j]
                     alist[j] = alist[j+1]
                     alist[j+1] = placeholder
-
-        return alist
+        maxVal = alist[len(alist)-1]
+        for i in range(len(alist)-1):
+            if alist[i] == maxVal:
+                index = i
+        return maxVal, index
         pass
 
     def lowest_temp(self, alist):
@@ -64,6 +67,23 @@ class QuestionThree(object):
         :param alist: list with min. temp. data
         :return: lowest temp. and the index
         """
+        for i in range(len(alist)):
+            for j in range(i):
+                if alist[j] < alist[j + 1]:
+                    placeholder = alist[j]
+                    alist[j] = alist[j + 1]
+                    alist[j + 1] = placeholder
+        minVal = alist[len(alist) - 1]
+        for i in range(len(alist) - 1):
+            if alist[i] == minVal:
+                index = i
+        print('start')
+        print(alist)
+        print('list')
+        print(minVal)
+        print('minval')
+
+        return minVal, index
         pass
 
     def average_high(self, alist):
