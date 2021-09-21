@@ -45,7 +45,7 @@ def merge2List(alist, lefthalf, righthalf, i, j, pos):
 def mergeSort_3_way(alist):
 
     comparison = 0
-    print('Splitting, ', alist)
+
     if len(alist)>1:
         firstThird = int(len(alist)/3)
         secondThird = int(len(alist)*2/3)
@@ -130,29 +130,7 @@ def mergeSort_3_way(alist):
             comparison += 1
             k += 1
 
-        print('Merging', alist)
-        # while i < len(firstList) and j < len(rightThird):
-        #     if firstList[i] <= rightThird[j]:
-        #         secondList.append(firstList[i])
-        #         i = i + 1
-        #     else:
-        #         secondList.append(rightThird[j])
-        #         j = j + 1
-        #
-        # while i < len(firstList):
-        #     secondList.append(firstList[i])
-        #     i = i + 1
-        #
-        # while j < len(rightThird):
-        #     secondList.append(rightThird[j])
-        #     j = j + 1
 
-    #
-    # Write your code here
-    #     print('first')
-    #     print(firstList)
-    # #
-    #     print(secondList)
         return comparison
 
 

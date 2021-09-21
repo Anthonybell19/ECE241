@@ -39,13 +39,7 @@ dates_prcp = []
 
 class QuestionThree(object):
     def highest_temp(self, alist):
-        """
-        This function receives an array of max. temperature data from a specified period
-        and returns the highest temperature (highest T) in that period and the index on the array
-        when that highest temperature occurred.
-        :param alist: list with max. temp. data
-        :return: highest temp and the index
-        """
+
         maxVal = 0  # max value to be returned at the end of list iteration
         index = 0  # store the index of the max value
         for i in range(len(alist)):
@@ -56,13 +50,7 @@ class QuestionThree(object):
         pass
 
     def lowest_temp(self, alist):
-        """
-        Similar to the previous method, this function receives an array with min. temp. data
-        from a specific period and returns the lowest temp. (lowest T) and the index
-        when this lowest temp. occurred.
-        :param alist: list with min. temp. data
-        :return: lowest temp. and the index
-        """
+
         minVal = 0  # min value to be returned at the end of the list iteration
         index = 0  # store the index of the min value
         for i in range(len(alist)):
@@ -73,12 +61,7 @@ class QuestionThree(object):
         pass
 
     def average_high(self, alist):
-        """
-        This function receives an array with max. temp. data from a specific period and
-        returns the average temp.
-        :param alist: list with max. temp. data
-        :return: average max. temp.
-        """
+
         sum = 0  # will contain the sum of all the values in the list
         for i in range(len(alist)):
             sum += alist[i]
@@ -88,12 +71,7 @@ class QuestionThree(object):
         pass
 
     def average_low(self, alist):
-        """
-        This function receives an array with min. temp. data from a specific period and
-        returns the average temp.
-        :param alist: list with min. temp. data
-        :return: average min. temp.
-        """
+
         sum = 0  # will contain the sum of all the values in the list
         for i in range(len(alist)):
             sum += alist[i]
