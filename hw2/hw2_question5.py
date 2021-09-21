@@ -67,15 +67,15 @@ def mergeSort_3_way(alist):
         k=0
 
         while i < len(leftThird) and j < len(middleThird) and q < len(rightThird):
-            if leftThird[i] <= middleThird[j]:
-                if leftThird[i] <= rightThird[q]:
+            if leftThird[i] >= middleThird[j]:
+                if leftThird[i] >= rightThird[q]:
                     alist[k] = leftThird[i]
                     i = i + 1
                 else:
                     alist[k] = rightThird[q]
                     q = q + 1
             else:
-                if middleThird[j] <= rightThird[q]:
+                if middleThird[j] >= rightThird[q]:
                     alist[k] = middleThird[j]
                     j = j + 1
                 else:
@@ -85,7 +85,7 @@ def mergeSort_3_way(alist):
             k += 1
 
         while i < len(leftThird) and j < len(middleThird):
-            if leftThird[i] <= middleThird[j]:
+            if leftThird[i] >= middleThird[j]:
                 alist[k] = leftThird[i]
                 i = i + 1
             else:
@@ -95,7 +95,7 @@ def mergeSort_3_way(alist):
             k = k + 1
 
         while i < len(leftThird) and q < len(rightThird):
-            if leftThird[i] <= rightThird[q]:
+            if leftThird[i] >= rightThird[q]:
                 alist[k] = leftThird[i]
                 i = i + 1
             else:
@@ -105,7 +105,7 @@ def mergeSort_3_way(alist):
             k = k + 1
 
         while j < len(middleThird) and q < len(rightThird):
-            if middleThird[j] <= rightThird[q]:
+            if middleThird[j] >= rightThird[q]:
                 alist[k] = middleThird[j]
                 j = j + 1
             else:
