@@ -46,15 +46,11 @@ class QuestionThree(object):
         :param alist: list with max. temp. data
         :return: highest temp and the index
         """
+        maxVal = 0  # max value to be returned at the end of list iteration
+        index = 0  # store the index of the max value
         for i in range(len(alist)):
-            for j in range(i):
-                if alist[j] > alist[j+1]:
-                    placeholder = alist[j]
-                    alist[j] = alist[j+1]
-                    alist[j+1] = placeholder
-        maxVal = alist[len(alist)-1]
-        for i in range(len(alist)-1):
-            if alist[i] == maxVal:
+            if alist[i] > maxVal:
+                maxVal = alist[i]
                 index = i
         return maxVal, index
         pass
@@ -67,22 +63,12 @@ class QuestionThree(object):
         :param alist: list with min. temp. data
         :return: lowest temp. and the index
         """
+        minVal = 0  # min value to be returned at the end of the list iteration
+        index = 0  # store the index of the min value
         for i in range(len(alist)):
-            for j in range(i):
-                if alist[j] < alist[j + 1]:
-                    placeholder = alist[j]
-                    alist[j] = alist[j + 1]
-                    alist[j + 1] = placeholder
-        minVal = alist[len(alist) - 1]
-        for i in range(len(alist) - 1):
-            if alist[i] == minVal:
+            if alist[i] < minVal:
+                minVal = alist[i]
                 index = i
-        print('start')
-        print(alist)
-        print('list')
-        print(minVal)
-        print('minval')
-
         return minVal, index
         pass
 
@@ -93,6 +79,12 @@ class QuestionThree(object):
         :param alist: list with max. temp. data
         :return: average max. temp.
         """
+        sum = 0  # will contain the sum of all the values in the list
+        for i in range(len(alist)):
+            sum += alist[i]
+
+        averageMax = sum / len(alist)  # divide the total sum by the length of the list
+        return averageMax
         pass
 
     def average_low(self, alist):
@@ -102,6 +94,12 @@ class QuestionThree(object):
         :param alist: list with min. temp. data
         :return: average min. temp.
         """
+        sum = 0  # will contain the sum of all the values in the list
+        for i in range(len(alist)):
+            sum += alist[i]
+
+        averageMin = sum / len(alist)  # divide the total sum by the length of the list
+        return averageMin
         pass
 
 
