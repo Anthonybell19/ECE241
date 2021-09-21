@@ -24,13 +24,24 @@ e.g.     |||10, 20||1, 2, 4, 7|||
 class Shelf:
 
     def search_product(self, shelf_contents, lower_l, upper_l, product):
-        # TODO Fill this function to find the position of the product in shelf_contents
-        # TODO return the position of the product
-        # TODO 'return -1' if the product is not in the shelf
-        for i in range(len(shelf_contents)-1):
-            
 
-        return -2  # TODO remove this after you have filled this function
+        mid = (lower_l + upper_l) // 2  # get the middle index of the list
+        if product == shelf_contents[mid]: # if our product is equal to the middle of the list, return the value
+            return mid
+        if lower_l >= upper_l: # if lower bound has become greater than or equal to upper bound, we know the product is
+                                # not in the list.
+            return -1
+        if shelf_contents[lower_l] < shelf_contents[mid]:  # check to see if lower half is sorted
+            if shelf_contents[lower_l] <= product <= shelf_contents[mid]: # check to see if product is in lower half
+                return self.search_product(shelf_contents, lower_l, mid - 1, product)
+            else:
+                return self.search_product(shelf_contents, mid + 1, upper_l, product) # else it must be in upper half
+
+        if shelf_contents[mid] < shelf_contents[upper_l]: # check to see if upper half is sorted
+            if shelf_contents[mid] <= product <= shelf_contents[upper_l]: # check to see if product is in upper half
+                return self.search_product(shelf_contents, mid + 1, upper_l, product)
+            else:
+                return self.search_product(shelf_contents, lower_l, mid - 1, product) # else it must be in lower half
 
     def locate_product(self, pos, shelf_contents):
         '''
@@ -40,10 +51,10 @@ class Shelf:
             print("\nFill in the search function and remove 'return -2'")
             return
 
-        if pos is not -1:
+        if pos != -1:
             print("\n########### Found product on the Shelf ###########")
 
-            print("Found product with width:{} at position:{} ".format(shelf_contents[pos],pos))
+            print("Found product with width:{} at position:{} ".format(shelf_contents[pos], pos))
 
             print("\n##################################################")
         else:
