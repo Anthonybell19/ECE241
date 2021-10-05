@@ -1,9 +1,9 @@
 """
 UMass ECE 241 - Advanced Programming
 Homework #3   - Fall 2020
-question23.py
+question2.py
 
-Find the shortest path between 2 nodes in a binary search tree.
+Find the shortest path between 2 n-odes in a binary search tree.
 Modify function _find_path() which is called from find_path().
 Follow instructions in _find_path() method to return list_path and steps.
 
@@ -176,60 +176,61 @@ class BinarySearchTree:
         if nature == 0:  # means e1 < e2
             # element_holder = element_1
             newKey = element_1.key
-            while not found and newKey < self.size: # right side traversing
-                leftChildKey = newKey*2 + 1
-                rightChildKey = newKey*2 + 2
+            while not found and newKey < self.size:  # right side traversing
+                leftChildKey = newKey * 2 + 1
+                rightChildKey = newKey * 2 + 2
                 if newKey == element_2.key:
                     found = True
                     list_path.append(newKey)
                     self.steps += 1
-                    return [list_path, self.steps]
+
                 elif leftChildKey == element_2.key:
                     found = True
                     list_path.append(newKey)
                     list_path.append(leftChildKey)
                     self.steps += 2
-                    return [list_path, self.steps]
+
                 elif rightChildKey == element_2.key:
                     found = True
                     list_path.append(newKey)
                     list_path.append(rightChildKey)
                     self.steps += 2
-                    return [list_path, self.steps]
+
                 else:
                     list_path.append(newKey)
                     self.steps += 1
-                    newKey = newKey * 2 + 2   # right child tranversing
-                    # element_holder = self.get_Node(newKey)
-            if not found:   # left side traversing
-                list_path = []
-                self.steps = 0
-                newKey = element_1.key
-                while not found:
-                    leftChildKey = newKey * 2 + 1
-                    rightChildKey = newKey * 2 + 2
-                    if newKey == element_2.key:
-                        found = True
-                        list_path.append(newKey)
-                        self.steps += 1
-                        return [list_path, self.steps]
-                    elif leftChildKey == element_2.key:
-                        found = True
-                        list_path.append(newKey)
-                        list_path.append(leftChildKey)
-                        self.steps += 2
-                        return [list_path, self.steps]
-                    elif rightChildKey == element_2.key:
-                        found = True
-                        list_path.append(newKey)
-                        list_path.append(rightChildKey)
-                        self.steps += 2
-                        return [list_path, self.steps]
-                    else:
-                        list_path.append(newKey)
-                        self.steps += 1
-                        newKey = newKey * 2 + 1  # left child tranversing
+                    newKey = newKey * 2 + 2  # right child tranversing
+            if found:
+                return [list_path, self.steps]
 
+            list_path = []
+            self.steps = 0
+            newKey = element_1.key
+            while not found and newKey < self.size:  # left side traversing
+                leftChildKey = newKey * 2 + 1
+                rightChildKey = newKey * 2 + 2
+                if newKey == element_2.key:
+                    found = True
+                    list_path.append(newKey)
+                    self.steps += 1
+
+                elif leftChildKey == element_2.key:
+                    found = True
+                    list_path.append(newKey)
+                    list_path.append(leftChildKey)
+                    self.steps += 2
+
+                elif rightChildKey == element_2.key:
+                    found = True
+                    list_path.append(newKey)
+                    list_path.append(rightChildKey)
+                    self.steps += 2
+                else:
+                    list_path.append(newKey)
+                    self.steps += 1
+                    newKey = newKey * 2 + 1  # left child tranversing
+            if found:
+                return [list_path, self.steps]
 
         if nature == 1:  # means e1 > e2
             newKey = element_2.key
@@ -240,55 +241,82 @@ class BinarySearchTree:
                     found = True
                     list_path.append(newKey)
                     self.steps += 1
-                    return [list_path, self.steps]
+
                 elif leftChildKey == element_1.key:
                     found = True
                     list_path.append(newKey)
                     list_path.append(leftChildKey)
                     self.steps += 2
-                    return [list_path, self.steps]
+
                 elif rightChildKey == element_1.key:
                     found = True
                     list_path.append(newKey)
                     list_path.append(rightChildKey)
                     self.steps += 2
-                    return [list_path, self.steps]
+
                 else:
                     list_path.append(newKey)
                     self.steps += 1
                     newKey = newKey * 2 + 2  # right child tranversing
-                    # element_holder = self.get_Node(newKey)
-            if not found:  # left side traversing
-                list_path = []
-                self.steps = 0
-                newKey = element_2.key
-                while not found:
-                    leftChildKey = newKey * 2 + 1
-                    rightChildKey = newKey * 2 + 2
-                    if newKey == element_1.key:
-                        found = True
-                        list_path.append(newKey)
-                        self.steps += 1
-                        return [list_path, self.steps]
-                    elif leftChildKey == element_1.key:
-                        found = True
-                        list_path.append(newKey)
-                        list_path.append(leftChildKey)
-                        self.steps += 2
-                        return [list_path, self.steps]
-                    elif rightChildKey == element_1.key:
-                        found = True
-                        list_path.append(newKey)
-                        list_path.append(rightChildKey)
-                        self.steps += 2
-                        return [list_path, self.steps]
-                    else:
-                        list_path.append(newKey)
-                        self.steps += 1
-                        newKey = newKey * 2 + 1  # left child tranversing
+            if found:
+                return [list_path, self.steps]
 
-        # TODO: Fill in code
-        return [list_path, self.steps]  # TODO: uncomment this line after filling this function
+            list_path = []
+            self.steps = 0
+            newKey = element_2.key
+            while not found and newKey < self.size:  # left side traversing
+                leftChildKey = newKey * 2 + 1
+                rightChildKey = newKey * 2 + 2
+                if newKey == element_1.key:
+                    found = True
+                    list_path.append(newKey)
+                    self.steps += 1
+
+                elif leftChildKey == element_1.key:
+                    found = True
+                    list_path.append(newKey)
+                    list_path.append(leftChildKey)
+                    self.steps += 2
+
+                elif rightChildKey == element_1.key:
+                    found = True
+                    list_path.append(newKey)
+                    list_path.append(rightChildKey)
+                    self.steps += 2
+
+                else:
+                    list_path.append(newKey)
+                    self.steps += 1
+                    newKey = newKey * 2 + 1  # left child tranversing
+            if found:
+                return [list_path, self.steps]
+        list_path = []
+        list1 = []
+        list2 = []
+        self.steps = 0
+        rootElement = self.root
+        if rootElement.key > element_1.key:
+            list1 = self._find_path(rootElement, element_1, 1)[0][1:]
+
+            for i in reversed(list1):
+                list_path.append(i)
+        else:
+            list1= self._find_path(rootElement, element_1, 0)[0][1:]
+
+            for i in reversed(list1):
+                list_path.append(i)
+        if rootElement.key > element_2.key:
+            list2 = self._find_path(rootElement, element_2, 1)[0]
+            for i in list2:
+                list_path.append(i)
+        else:
+            list2 = self._find_path(rootElement, element_2, 0)[0]
+            for i in list2:
+                list_path.append(i)
+        self.steps = len(list_path)
+        return [list_path, self.steps]
+
+
 
 
 def delete(self, key):
@@ -395,7 +423,7 @@ def remove(self, currentNode):
 def main():
     mytree = BinarySearchTree()
 
-    mytree[0 ] = 'hi'
+    mytree[0] = 'hi'
     mytree[1] = 'a'
     mytree[5] = 'bye'
     mytree[2] = 'c'
@@ -408,7 +436,7 @@ def main():
     # print(mytree[6])
     # print(mytree[2])
 
-    path_list_steps = mytree.find_path(6, 1)
+    path_list_steps = mytree.find_path(1, 6)
     print(path_list_steps[0], path_list_steps[1])  # this prints list_path, steps
 
 
