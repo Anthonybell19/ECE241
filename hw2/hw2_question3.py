@@ -39,69 +39,45 @@ dates_prcp = []
 
 class QuestionThree(object):
     def highest_temp(self, alist):
-        """
-        This function receives an array of max. temperature data from a specified period
-        and returns the highest temperature (highest T) in that period and the index on the array
-        when that highest temperature occurred.
-        :param alist: list with max. temp. data
-        :return: highest temp and the index
-        """
+
+        maxVal = 0  # max value to be returned at the end of list iteration
+        index = 0  # store the index of the max value
         for i in range(len(alist)):
-            for j in range(i):
-                if alist[j] > alist[j+1]:
-                    placeholder = alist[j]
-                    alist[j] = alist[j+1]
-                    alist[j+1] = placeholder
-        maxVal = alist[len(alist)-1]
-        for i in range(len(alist)-1):
-            if alist[i] == maxVal:
+            if alist[i] > maxVal:
+                maxVal = alist[i]
                 index = i
         return maxVal, index
         pass
 
     def lowest_temp(self, alist):
-        """
-        Similar to the previous method, this function receives an array with min. temp. data
-        from a specific period and returns the lowest temp. (lowest T) and the index
-        when this lowest temp. occurred.
-        :param alist: list with min. temp. data
-        :return: lowest temp. and the index
-        """
-        for i in range(len(alist)):
-            for j in range(i):
-                if alist[j] < alist[j + 1]:
-                    placeholder = alist[j]
-                    alist[j] = alist[j + 1]
-                    alist[j + 1] = placeholder
-        minVal = alist[len(alist) - 1]
-        for i in range(len(alist) - 1):
-            if alist[i] == minVal:
-                index = i
-        print('start')
-        print(alist)
-        print('list')
-        print(minVal)
-        print('minval')
 
+        minVal = 0  # min value to be returned at the end of the list iteration
+        index = 0  # store the index of the min value
+        for i in range(len(alist)):
+            if alist[i] < minVal:
+                minVal = alist[i]
+                index = i
         return minVal, index
         pass
 
     def average_high(self, alist):
-        """
-        This function receives an array with max. temp. data from a specific period and
-        returns the average temp.
-        :param alist: list with max. temp. data
-        :return: average max. temp.
-        """
+
+        sum = 0  # will contain the sum of all the values in the list
+        for i in range(len(alist)):
+            sum += alist[i]
+
+        averageMax = sum / len(alist)  # divide the total sum by the length of the list
+        return averageMax
         pass
 
     def average_low(self, alist):
-        """
-        This function receives an array with min. temp. data from a specific period and
-        returns the average temp.
-        :param alist: list with min. temp. data
-        :return: average min. temp.
-        """
+
+        sum = 0  # will contain the sum of all the values in the list
+        for i in range(len(alist)):
+            sum += alist[i]
+
+        averageMin = sum / len(alist)  # divide the total sum by the length of the list
+        return averageMin
         pass
 
 
