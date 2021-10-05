@@ -1,7 +1,7 @@
 """
 UMass ECE 241   -   Advanced Programming
 Homework #3     -   Fall 2020
-question1.py    -   Hashing with ordered list chaining
+test_question1.py    -   Hashing with ordered list chaining
 
 Only fill put() method in HashTable
 
