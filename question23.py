@@ -1,7 +1,7 @@
 """
 UMass ECE 241 - Advanced Programming
 Homework #3   - Fall 2020
-question2.py
+question23.py
 
 Find the shortest path between 2 nodes in a binary search tree.
 Modify function _find_path() which is called from find_path().
