@@ -170,153 +170,60 @@ class BinarySearchTree:
         list_path = [] which contains keys of the nodes in the path
         steps = int() which counts the number of nodes traversed in the path"""
         list_path = []
-        found = False
-        newKey = 0
-
-        if nature == 0:  # means e1 < e2
-            # element_holder = element_1
-            newKey = element_1.key
-            while not found and newKey < self.size:  # right side traversing
-                leftChildKey = newKey * 2 + 1
-                rightChildKey = newKey * 2 + 2
-                if newKey == element_2.key:
-                    found = True
-                    list_path.append(newKey)
-                    self.steps += 1
-
-                elif leftChildKey == element_2.key:
-                    found = True
-                    list_path.append(newKey)
-                    list_path.append(leftChildKey)
-                    self.steps += 2
-
-                elif rightChildKey == element_2.key:
-                    found = True
-                    list_path.append(newKey)
-                    list_path.append(rightChildKey)
-                    self.steps += 2
-
-                else:
-                    list_path.append(newKey)
-                    self.steps += 1
-                    newKey = newKey * 2 + 2  # right child tranversing
-            if found:
-                return [list_path, self.steps]
-
-            list_path = []
-            self.steps = 0
-            newKey = element_1.key
-            while not found and newKey < self.size:  # left side traversing
-                leftChildKey = newKey * 2 + 1
-                rightChildKey = newKey * 2 + 2
-                if newKey == element_2.key:
-                    found = True
-                    list_path.append(newKey)
-                    self.steps += 1
-
-                elif leftChildKey == element_2.key:
-                    found = True
-                    list_path.append(newKey)
-                    list_path.append(leftChildKey)
-                    self.steps += 2
-
-                elif rightChildKey == element_2.key:
-                    found = True
-                    list_path.append(newKey)
-                    list_path.append(rightChildKey)
-                    self.steps += 2
-                else:
-                    list_path.append(newKey)
-                    self.steps += 1
-                    newKey = newKey * 2 + 1  # left child tranversing
-            if found:
-                return [list_path, self.steps]
-
-        if nature == 1:  # means e1 > e2
-            newKey = element_2.key
-            while not found and newKey < self.size:  # right side traversing
-                leftChildKey = newKey * 2 + 1
-                rightChildKey = newKey * 2 + 2
-                if newKey == element_1.key:
-                    found = True
-                    list_path.append(newKey)
-                    self.steps += 1
-
-                elif leftChildKey == element_1.key:
-                    found = True
-                    list_path.append(newKey)
-                    list_path.append(leftChildKey)
-                    self.steps += 2
-
-                elif rightChildKey == element_1.key:
-                    found = True
-                    list_path.append(newKey)
-                    list_path.append(rightChildKey)
-                    self.steps += 2
-
-                else:
-                    list_path.append(newKey)
-                    self.steps += 1
-                    newKey = newKey * 2 + 2  # right child tranversing
-            if found:
-                return [list_path, self.steps]
-
-            list_path = []
-            self.steps = 0
-            newKey = element_2.key
-            while not found and newKey < self.size:  # left side traversing
-                leftChildKey = newKey * 2 + 1
-                rightChildKey = newKey * 2 + 2
-                if newKey == element_1.key:
-                    found = True
-                    list_path.append(newKey)
-                    self.steps += 1
-
-                elif leftChildKey == element_1.key:
-                    found = True
-                    list_path.append(newKey)
-                    list_path.append(leftChildKey)
-                    self.steps += 2
-
-                elif rightChildKey == element_1.key:
-                    found = True
-                    list_path.append(newKey)
-                    list_path.append(rightChildKey)
-                    self.steps += 2
-
-                else:
-                    list_path.append(newKey)
-                    self.steps += 1
-                    newKey = newKey * 2 + 1  # left child tranversing
-            if found:
-                return [list_path, self.steps]
-        list_path = []
         list1 = []
         list2 = []
-        self.steps = 0
+        found = False
+        newNode = TreeNode('','')
+
         rootElement = self.root
-        if rootElement.key > element_1.key:
-            list1 = self._find_path(rootElement, element_1, 1)[0][1:]
 
-            for i in reversed(list1):
-                list_path.append(i)
-        else:
-            list1= self._find_path(rootElement, element_1, 0)[0][1:]
+        # element_holder = element_1
+        newNode = element_2
+        while not found and newNode.key >= 0:  # right side traversing
+            if newNode.key == rootElement.key:
+                found = True
+                list2.append(newNode.key)
 
-            for i in reversed(list1):
-                list_path.append(i)
-        if rootElement.key > element_2.key:
-            list2 = self._find_path(rootElement, element_2, 1)[0]
-            for i in list2:
-                list_path.append(i)
-        else:
-            list2 = self._find_path(rootElement, element_2, 0)[0]
-            for i in list2:
-                list_path.append(i)
+            else:
+                list2.append(newNode.key)
+                newNode = newNode.parent  # parent tranversing
+
+        found = False
+        newNode = element_1
+        while not found and newNode.key >= 0:  # right side traversing
+            if newNode.key == rootElement.key:
+                found = True
+                list1.append(newNode.key)
+
+            else:
+                list1.append(newNode.key)
+                newNode = newNode.parent  # parent tranversing
+
+        commonVals = []
+        for i in list1:
+            for j in list2:
+                if i == j:
+                    commonVals.append(i)
+        appendList = commonVals[1:]
+
+        for i in appendList:
+            for j in list1:
+                if i == j:
+                    list1.remove(j)
+        for i in commonVals:
+            for j in list2:
+                if i == j:
+                    list2.remove(j)
+
+        list2 = reversed(list2)
+        for i in list1:
+            list_path.append(i)
+        for i in list2:
+            list_path.append(i)
+
         self.steps = len(list_path)
+
         return [list_path, self.steps]
-
-
 
 
 def delete(self, key):
@@ -436,7 +343,7 @@ def main():
     # print(mytree[6])
     # print(mytree[2])
 
-    path_list_steps = mytree.find_path(1, 6)
+    path_list_steps = mytree.find_path(0, 6)
     print(path_list_steps[0], path_list_steps[1])  # this prints list_path, steps
 
 
