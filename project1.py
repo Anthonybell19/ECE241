@@ -53,7 +53,7 @@ class TreeNode:
 
 class BinarySearchTree:
 
-    def __init__(self):
+    def __init__(self, stockList: list):
         self.root = None
         self.size = 0
 
@@ -248,7 +248,7 @@ class StockLibrary:
     Constructor to initialize the StockLibrary
     """
 
-    def __init__(self, stockList):
+    def __init__(self, stockList: list):
         self.stockList = stockList
         self.size = len(self.stockList)
         self.isSorted = False
