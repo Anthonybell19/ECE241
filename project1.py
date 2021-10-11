@@ -248,8 +248,8 @@ class StockLibrary:
     Constructor to initialize the StockLibrary
     """
 
-    def __init__(self, stockList: list):
-        self.stockList = stockList
+    def __init__(self):
+        self.stockList = []
         self.size = len(self.stockList)
         self.isSorted = False
         self.bst = None
@@ -432,7 +432,7 @@ class StockLibrary:
 # WRITE YOUR OWN TEST UNDER THIS IF YOU NEED
 if __name__ == '__main__':
     testStock = Stock('Exxon Mobil Corporation', 'XOM', 384845.80, [41.50, 43.50, 44.61, 44.96, 45.46, 46.84, 47.8])
-    stockLib = StockLibrary([])
+    stockLib = StockLibrary()
     testSymbol = 'GE'
     testName = 'General Electric Company'
     print("\n-------load dataset-------")
