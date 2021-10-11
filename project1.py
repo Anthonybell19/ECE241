@@ -287,13 +287,13 @@ class StockLibrary:
                 if i.sname == query:
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
                         round(float(i.val),1)) + '; ' + \
-                           'price: ' + str(i.prices[len(i.prices) - 1])
+                           'price:' + str(i.prices[len(i.prices) - 1])
         if attribute == 'symbol':
             for i in self.stockList:
                 if i.symbol == query:
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
                         round(float(i.val),1)) + '; ' + \
-                           'price: ' + str(i.prices[len(i.prices) - 1])
+                           'price:' + str(i.prices[len(i.prices) - 1])
         return 'Stock not found'
 
     """
