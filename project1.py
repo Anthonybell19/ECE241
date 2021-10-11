@@ -236,7 +236,7 @@ class Stock:
     def __str__(self):
         return 'name: ' + self.sname + '; ' + 'symbol: ' + self.symbol + '; ' + 'val: ' + str(
                         round(float(self.val),1)) + '; ' + \
-               'price: ' + str(self.prices[len(self.prices) - 1])
+               'price:' + str(self.prices[len(self.prices) - 1])
 
 
 """
