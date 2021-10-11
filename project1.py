@@ -248,7 +248,7 @@ class StockLibrary:
     Constructor to initialize the StockLibrary
     """
 
-    def __init__(self, stockList: list):
+    def __init__(self, stockList):
         self.stockList = stockList
         self.size = len(self.stockList)
         self.isSorted = False
