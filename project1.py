@@ -285,12 +285,14 @@ class StockLibrary:
         if attribute == 'name':
             for i in self.stockList:
                 if i.sname == query:
-                    return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(i.val) + '; ' + \
+                    return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
+                        round(float(i.val),1)) + '; ' + \
                            'price: ' + str(i.prices[len(i.prices) - 1])
         if attribute == 'symbol':
             for i in self.stockList:
                 if i.symbol == query:
-                    return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(i.val) + '; ' + \
+                    return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
+                        round(float(i.val),1)) + '; ' + \
                            'price: ' + str(i.prices[len(i.prices) - 1])
         return 'Stock not found'
 
@@ -409,7 +411,6 @@ class StockLibrary:
     # work
     def _find(self, key, currentNode):
         if currentNode is not None:
-            print(currentNode.payload.symbol)
             if key == currentNode.payload.symbol:
                 return 'FOUND NODE'
             if key < currentNode.payload.symbol:
