@@ -265,13 +265,12 @@ class StockLibrary:
         file = open(filename, 'r')
         stocks = []
         infoList = file.readlines()[1:]
-        tempList = []
         for i in infoList:
             tempList = i.split('|')
             stocks.append(Stock(tempList[0], tempList[1], tempList[2], tempList[3:22]))
 
-        print(stocks[0])
         self.stockList = stocks;
+        self.size = len(self.stockList)
 
     """
     The linearSearch method searches the stocks based on sname or symbol.
