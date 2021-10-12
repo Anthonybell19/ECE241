@@ -301,88 +301,41 @@ class StockLibrary:
     The sorted array should be stored in the same stockList.
     Remember to change the isSorted variable after sorted
     """
-
     def quickSort(self):
-
-        first = 0;
-        last = len(self.stockList) - 1
-        lowerSplitPoint = 0
-        upperSplitPoint = 0
-
-        if first < last:
-            pivotvalue = self.stockList[first].symbol
-            leftmark = first + 1
-            rightmark = last
-            done = False
-            while not done:
-                while leftmark <= rightmark and self.stockList[leftmark].symbol <= pivotvalue:
-                    leftmark = leftmark + 1
-
-                while rightmark >= leftmark and self.stockList[rightmark].symbol >= pivotvalue:
-                    rightmark = rightmark - 1
-
-                if rightmark < leftmark:
-                    done = True
-                else:
-                    tempValue = self.stockList[leftmark]
-                    self.stockList[leftmark] = self.stockList[rightmark]
-                    self.stockList[rightmark] = tempValue
-
-            tempValue = self.stockList[first]
-            self.stockList[first] = self.stockList[rightmark]
-            self.stockList[rightmark] = tempValue
-            upperSplitPoint = rightmark + 1
-            lowerSplitPoint = leftmark - 1
-
-        while upperSplitPoint < last:
-            pivotvalue = self.stockList[first].symbol
-            leftmark = upperSplitPoint + 1
-            rightmark = last
-            done = False
-            while not done:
-                while leftmark <= rightmark and self.stockList[leftmark].symbol <= pivotvalue:
-                    leftmark = leftmark + 1
-
-                while rightmark >= leftmark and self.stockList[rightmark].symbol >= pivotvalue:
-                    rightmark = rightmark - 1
-
-                if rightmark < leftmark:
-                    done = True
-                else:
-                    tempValue = self.stockList[leftmark]
-                    self.stockList[leftmark] = self.stockList[rightmark]
-                    self.stockList[rightmark] = tempValue
-
-            tempValue = self.stockList[upperSplitPoint]
-            self.stockList[upperSplitPoint] = self.stockList[rightmark]
-            self.stockList[rightmark] = tempValue
-            upperSplitPoint = rightmark + 1
-
-        while lowerSplitPoint > first:
-            pivotvalue = self.stockList[first].symbol
-            leftmark = first + 1
-            rightmark = lowerSplitPoint
-            done = False
-            while not done:
-                while leftmark <= rightmark and self.stockList[leftmark].symbol <= pivotvalue:
-                    leftmark = leftmark + 1
-
-                while rightmark >= leftmark and self.stockList[rightmark].symbol >= pivotvalue:
-                    rightmark = rightmark - 1
-
-                if rightmark < leftmark:
-                    done = True
-                else:
-                    tempValue = self.stockList[leftmark]
-                    self.stockList[leftmark] = self.stockList[rightmark]
-                    self.stockList[rightmark] = tempValue
-
-            tempValue = self.stockList[upperSplitPoint]
-            self.stockList[upperSplitPoint] = self.stockList[rightmark]
-            self.stockList[rightmark] = tempValue
-            lowerSplitPoint = rightmark - 1
-
+        self.quickSortHelper(self.stockList, 0, len(self.stockList)-1)
         self.isSorted = True
+
+    def quickSortHelper(self, list, first, last):
+        if first < last:
+            splitpoint = self.partition(list, first, last)
+            self.quickSortHelper(list, first, splitpoint - 1)
+            self.quickSortHelper(list, splitpoint + 1, last)
+
+    def partition(self, list, first, last):
+        pivotvalue = list[first].symbol
+        leftmark = first+1
+        rightmark = last
+        done = False
+        while not done:
+            while leftmark <= rightmark and list[leftmark].symbol <= pivotvalue:
+                leftmark = leftmark + 1
+
+            while rightmark >= leftmark and list[rightmark].symbol >= pivotvalue:
+                rightmark = rightmark -1
+
+            if rightmark < leftmark:
+                done = True
+            else:
+                temp = list[leftmark]
+                list[leftmark] = list[rightmark]
+                list[rightmark] = temp
+
+        temp = list[first]
+        list[first] = list[rightmark]
+        list[rightmark] = temp
+
+
+        return rightmark
 
     """
     build a balanced BST of the stocks based on the symbol. 
