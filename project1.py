@@ -51,7 +51,7 @@ class TreeNode:
             self.rightChild.parent = self
 
     def insert(self, key, data):
-        if self.value == data:
+        if self.key == key:
             return False
         elif key < self.key:
             if self.hasLeftChild():
@@ -215,11 +215,11 @@ class StockLibrary:
 
     def buildBST(self):
         for i in self.stockList:
-            if self.bst:
-                return self.bst.insert(i.symbol, i.val)
-            else:
+            if i == self.stockList[0]:
                 self.bst = TreeNode(i.symbol, i.val)
-                return True
+            if self.bst:
+                self.bst.insert(i.symbol, i.val)
+
 
 
     """
