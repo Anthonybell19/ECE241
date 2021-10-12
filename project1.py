@@ -365,20 +365,20 @@ class StockLibrary:
     def _find(self, key, currentNode):
         if currentNode is not None:
             if key == currentNode.payload.symbol:
-                return 'FOUND NODE'
+                return currentNode.payload
             if key < currentNode.payload.symbol:
                 if currentNode.hasLeftChild:
                     return self._find(key, currentNode.leftChild)
             elif currentNode.hasRightChild:
                 return self._find(key, currentNode.rightChild)
         else:
-            return 'not found'
+            return 'stock not found'
 
     def searchBST(self, query, current='dnode'):
         if self.bst:
             return self._find(query, self.bst)
         else:
-            return 'Stock not found'
+            return 'stock not found'
 
         pass
 
