@@ -68,17 +68,17 @@ class TreeNode:
 
     def find(self, key):
         if self.key == key:
-            return True
+            return self.payload
         elif key < self.key:
             if self.hasLeftChild():
                 return self.leftChild.find(key)
             else:
-                return False
+                return 'stock not found'
         else:
             if self.hasRightChild():
                 return self.rightChild.find(key)
             else:
-                return False
+                return 'stock not found'
 
 
 
