@@ -281,7 +281,6 @@ class AvlTree(BinarySearchTree):
                 rotRoot.balanceFactor, 0)
 
     def rotateRight(self, rotRoot):
-        # new root = b, rotroot is a
         newRoot = rotRoot.leftChild
         rotRoot.leftChild = newRoot.rightChild
         if newRoot.rightChild is not None:
@@ -455,8 +454,7 @@ class StockLibrary:
             node = TreeNode(i.symbol, i.val)
             if i is not None and node is not None:
                 tree.put(i.symbol, i.val)
-                tree.updateBalance(node)
-                tree.rebalance(node)
+
         self.bst = tree.root
 
     """
