@@ -5,7 +5,7 @@ project1.py - Sorting and Searching
 
 """
 
-import matplotlib.pyplot as plt
+
 
 
 class TreeNode:
@@ -228,8 +228,7 @@ class BinarySearchTree:
 
 
 class AvlTree(BinarySearchTree):
-    '''An extension t the BinarySearchTree data structure which
-    strives to keep itself balanced '''
+
 
     def _put(self, key, val, currentNode):
         if key < currentNode.key:
@@ -275,10 +274,9 @@ class AvlTree(BinarySearchTree):
                 rotRoot.parent.rightChild = newRoot
         newRoot.leftChild = rotRoot
         rotRoot.parent = newRoot
-        if rotRoot.parent is not None and rotRoot.balanceFactor is not None and newRoot.parent is not None and newRoot.balanceFactor is not None:
-            rotRoot.balanceFactor = rotRoot.balanceFactor + 1 - min(
+        rotRoot.balanceFactor = rotRoot.balanceFactor + 1 - min(
                 newRoot.balanceFactor, 0)
-            newRoot.balanceFactor = newRoot.balanceFactor + 1 + max(
+        newRoot.balanceFactor = newRoot.balanceFactor + 1 + max(
                 rotRoot.balanceFactor, 0)
 
     def rotateRight(self, rotRoot):
@@ -316,15 +314,10 @@ class AvlTree(BinarySearchTree):
                 self.rotateRight(node)
 
 
-"""
-Stock class for stock objects
-"""
 
 
 class Stock:
-    """
-    Constructor to initialize the stock object
-    """
+
 
     def __init__(self, sname: str, symbol: str, val: float, prices: list):
         # constructing stock obj
@@ -333,12 +326,7 @@ class Stock:
         self.val = val
         self.prices = prices
 
-    """
-    return the stock information as a string, including name, symbol, 
-    market value, and the price on the last day (2021-02-01). 
-    For example, the string of the first stock should be returned as: 
-    “name: Exxon Mobil Corporation; symbol: XOM; val: 384845.80; price:44.84”. 
-    """
+
 
     def __str__(self):
         # string function for printing out stock information
@@ -347,15 +335,7 @@ class Stock:
                'price:' + str(self.prices[len(self.prices) - 1])
 
 
-"""
-StockLibrary class to mange stock objects
-"""
-
-
 class StockLibrary:
-    """
-    Constructor to initialize the StockLibrary
-    """
 
     def __init__(self):
         # constructor for stock library obj
@@ -363,12 +343,6 @@ class StockLibrary:
         self.size = len(self.stockList)
         self.isSorted = False
         self.bst = None
-
-    """
-    The loadData method takes the file name of the input dataset,
-    and stores the data of stocks into the library. 
-    Make sure the order of the stocks is the same as the one in the input file. 
-    """
 
     def loadData(self, filename: str):
         file = open(filename, 'r')
@@ -381,14 +355,6 @@ class StockLibrary:
 
         self.stockList = stocks  # set class variables
         self.size = len(self.stockList)
-
-    """
-    The linearSearch method searches the stocks based on sname or symbol.
-    It takes two arguments as the string for search and an attribute field 
-    that we want to search (“name” or “symbol”). 
-    It returns the details of the stock as described in __str__() function 
-    or a “Stock not found” message when there is no match. 
-    """
 
     def linearSearch(self, query: str, attribute: str):
 
@@ -405,12 +371,6 @@ class StockLibrary:
                         round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
         return 'Stock not found'
-
-    """
-    Sort the stockList using QuickSort algorithm based on the stock symbol.
-    The sorted array should be stored in the same stockList.
-    Remember to change the isSorted variable after sorted
-    """
 
     def quickSort(self):
         # calls helper function and sets class variable isSorted to be true
@@ -452,11 +412,6 @@ class StockLibrary:
 
         return rightmark
 
-    """
-    build a balanced BST of the stocks based on the symbol. 
-    Store the root of the BST as attribute bst, which is a TreeNode type.
-    """
-
     def buildBST(self):
         tree = AvlTree()  # construct AVL tree
         for i in self.stockList:
@@ -465,19 +420,13 @@ class StockLibrary:
 
         self.bst = tree.root  # self the bst class variable to be the root of the tree
 
-    """
-    Search a stock based on the symbol attribute. 
-    It returns the details of the stock as described in __str__() function 
-    or a “Stock not found” message when there is no match. 
-    """
-
     def searchBST(self, query, current='dnode'):
-        stock = Stock('', '', 0, []) # create a stock to be passed into find function later
+        stock = Stock('', '', 0, [])  # create a stock to be passed into find function later
         for i in self.stockList:
             if i.symbol == query:
                 stock = i  # find corresponding stock obj
         if self.bst:
-            return self.bst.find(query, stock) # search binary tree for obj, use stock obj for returning info
+            return self.bst.find(query, stock)  # search binary tree for obj, use stock obj for returning info
         else:
             return 'stock not found'
 
