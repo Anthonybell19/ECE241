@@ -237,7 +237,7 @@ class AvlTree(BinarySearchTree):
                 self._put(key, val, currentNode.leftChild)
             else:
                 currentNode.leftChild = TreeNode(key, val, parent=currentNode)
-                self.updateBalance(currentNode.leftChile)
+                self.updateBalance(currentNode.leftChild)
         else:
             if currentNode.hasRightChild():
                 self._put(key, val, currentNode.rightChild)
