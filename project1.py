@@ -8,7 +8,6 @@ project1.py - Sorting and Searching
 import matplotlib.pyplot as plt
 
 
-
 class TreeNode:
     def __init__(self, key, val, left=None, right=None, parent=None):
         self.key = key
@@ -283,24 +282,25 @@ class AvlTree(BinarySearchTree):
                 rotRoot.balanceFactor, 0)
 
     def rotateRight(self, rotRoot):
-        if rotRoot is None:
+        if rotRoot is None:  # null error checking
             return False
-        newRoot = rotRoot.leftChild
-        rotRoot.leftChild = newRoot.rightChild
+        newRoot = rotRoot.leftChild  # create new root obj
+        rotRoot.leftChild = newRoot.rightChild  # move old root's left child
         if newRoot.rightChild:
-            newRoot.rightChild.parent = rotRoot
-        newRoot.parent = rotRoot.parent
+            newRoot.rightChild.parent = rotRoot  # set the new root's right child's parent to be old root
+        newRoot.parent = rotRoot.parent  # replace old root parent with new root parent
         if rotRoot is self.root:
-            self.root = newRoot
+            self.root = newRoot  # set new root to be root obj if it's replacing the root obj
         else:
             if rotRoot.parent.rightChild is rotRoot:
-                rotRoot.parent.rightChild = newRoot
+                rotRoot.parent.rightChild = newRoot  # set the old root's parent children
             else:
                 rotRoot.parent.leftChild = newRoot
-        newRoot.rightChild = rotRoot
-        rotRoot.parent = newRoot
-        rotRoot.balanceFactor = rotRoot.balanceFactor - 1 - max(newRoot.balanceFactor, 0)
-        newRoot.balanceFactor = newRoot.balanceFactor - 1 + min(rotRoot.balanceFactor, 0)
+        newRoot.rightChild = rotRoot  # setting new root right child to be old root
+        rotRoot.parent = newRoot  # setting old root's parent to be new root
+        rotRoot.balanceFactor = rotRoot.balanceFactor - 1 - max(newRoot.balanceFactor, 0)  # setting both roots balance
+        newRoot.balanceFactor = newRoot.balanceFactor - 1 + min(rotRoot.balanceFactor, 0)  # factor
+
     def rebalance(self, node):
         if node.balanceFactor < 0:
             if node.rightChild.balanceFactor > 0:
@@ -327,6 +327,7 @@ class Stock:
     """
 
     def __init__(self, sname: str, symbol: str, val: float, prices: list):
+        # constructing stock obj
         self.sname = sname
         self.symbol = symbol
         self.val = val
@@ -340,6 +341,7 @@ class Stock:
     """
 
     def __str__(self):
+        # string function for printing out stock information
         return 'name: ' + self.sname + '; ' + 'symbol: ' + self.symbol + '; ' + 'val: ' + str(
             round(float(self.val), 1)) + '; ' + \
                'price:' + str(self.prices[len(self.prices) - 1])
@@ -356,6 +358,7 @@ class StockLibrary:
     """
 
     def __init__(self):
+        # constructor for stock library obj
         self.stockList = []
         self.size = len(self.stockList)
         self.isSorted = False
@@ -370,12 +373,13 @@ class StockLibrary:
     def loadData(self, filename: str):
         file = open(filename, 'r')
         stocks = []
-        infoList = file.readlines()[1:]
+        infoList = file.readlines()[1:]  # grab everything after the first line of data
         for i in infoList:
-            tempList = i.split('|')
-            stocks.append(Stock(tempList[0], tempList[1], tempList[2], tempList[3:22]))
+            tempList = i.split('|')  # break list a part based on | operator
+            stocks.append(Stock(tempList[0], tempList[1], tempList[2], tempList[3:22]))  # append a new stock object to
+            # a list based off of stock information provided
 
-        self.stockList = stocks;
+        self.stockList = stocks  # set class variables
         self.size = len(self.stockList)
 
     """
@@ -388,15 +392,15 @@ class StockLibrary:
 
     def linearSearch(self, query: str, attribute: str):
 
-        if attribute == 'name':
+        if attribute == 'name':  # see if searching by stock name
             for i in self.stockList:
-                if i.sname == query:
+                if i.sname == query:  # iterate through list of stocks by name and return information if found
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
                         round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
-        if attribute == 'symbol':
+        if attribute == 'symbol':  # see if searching by stock symbol
             for i in self.stockList:
-                if i.symbol == query:
+                if i.symbol == query:  # iterate through list of stocks by symbol and return information if found
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
                         round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
@@ -409,36 +413,41 @@ class StockLibrary:
     """
 
     def quickSort(self):
+        # calls helper function and sets class variable isSorted to be true
         self.quickSortHelper(self.stockList, 0, len(self.stockList) - 1)
         self.isSorted = True
 
     def quickSortHelper(self, list, first, last):
+        # manages split point value and recursion for the quicksort function
         if first < last:
             splitpoint = self.partition(list, first, last)
             self.quickSortHelper(list, first, splitpoint - 1)
             self.quickSortHelper(list, splitpoint + 1, last)
 
     def partition(self, list, first, last):
-        pivotvalue = list[first].symbol
-        leftmark = first + 1
-        rightmark = last
+        pivotvalue = list[first].symbol  # value to be inserted in the sort
+        leftmark = first + 1  # lower marker
+        rightmark = last  # upper marker
         done = False
         while not done:
-            while leftmark <= rightmark and list[leftmark].symbol <= pivotvalue:
+            while leftmark <= rightmark and list[leftmark].symbol <= pivotvalue:  # find a value on lower half greater
+                # than pivot value
                 leftmark = leftmark + 1
 
-            while rightmark >= leftmark and list[rightmark].symbol >= pivotvalue:
+            while rightmark >= leftmark and list[
+                rightmark].symbol >= pivotvalue:  # find a value on upper half less than
+                # pivot value
                 rightmark = rightmark - 1
 
-            if rightmark < leftmark:
+            if rightmark < leftmark:  # if marks cross, stop
                 done = True
-            else:
+            else:  # swap left and right mark values if LM value > PV and RM value < PV
                 temp = list[leftmark]
                 list[leftmark] = list[rightmark]
                 list[rightmark] = temp
 
         temp = list[first]
-        list[first] = list[rightmark]
+        list[first] = list[rightmark]  # swap pivot value and right mark value
         list[rightmark] = temp
 
         return rightmark
@@ -449,13 +458,12 @@ class StockLibrary:
     """
 
     def buildBST(self):
-        tree = AvlTree()
+        tree = AvlTree()  # construct AVL tree
         for i in self.stockList:
-            node = TreeNode(i.symbol, i.val)
-            if i is not None and node is not None:
-                tree.put(i.symbol, i.val)
+            if i is not None:
+                tree.put(i.symbol, i.val)  # add to the binary tree, sort by the stock symbol
 
-        self.bst = tree.root
+        self.bst = tree.root  # self the bst class variable to be the root of the tree
 
     """
     Search a stock based on the symbol attribute. 
@@ -464,12 +472,12 @@ class StockLibrary:
     """
 
     def searchBST(self, query, current='dnode'):
-        stock = Stock('', '', 0, [])
+        stock = Stock('', '', 0, []) # create a stock to be passed into find function later
         for i in self.stockList:
             if i.symbol == query:
-                stock = i
+                stock = i  # find corresponding stock obj
         if self.bst:
-            return self.bst.find(query, stock)
+            return self.bst.find(query, stock) # search binary tree for obj, use stock obj for returning info
         else:
             return 'stock not found'
 
