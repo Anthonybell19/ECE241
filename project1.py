@@ -454,14 +454,10 @@ class StockLibrary:
 
     def buildBST(self):
         tree = AvlTree()
-        tree.rebalance(None)
-        tree.updateBalance(None)
-        tree.rotateLeft(None)
-        tree.rotateRight(None)
-        # for i in self.stockList:
-        #     node = TreeNode(i.symbol, i.val)
-        #     if i is not None and node is not None:
-        #         tree.put(i.symbol, i.val)
+        for i in self.stockList:
+            node = TreeNode(i.symbol, i.val)
+            if i is not None and node is not None:
+                tree.put(i.symbol, i.val)
 
         self.bst = tree.root
 
