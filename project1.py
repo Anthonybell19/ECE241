@@ -274,7 +274,7 @@ class AvlTree(BinarySearchTree):
                 rotRoot.parent.rightChild = newRoot
         newRoot.leftChild = rotRoot
         rotRoot.parent = newRoot
-        if rotRoot.balanceFactor is not None and newRoot.balanceFactor:
+        if rotRoot.balanceFactor is not None and newRoot.balanceFactor is not None:
             rotRoot.balanceFactor = rotRoot.balanceFactor + 1 - min(
                 newRoot.balanceFactor, 0)
             newRoot.balanceFactor = newRoot.balanceFactor + 1 + max(
@@ -293,7 +293,7 @@ class AvlTree(BinarySearchTree):
                 rotRoot.parent.rightChild = newRoot
         newRoot.rightChild = rotRoot
         rotRoot.parent = newRoot
-        if rotRoot.balanceFactor is not None and newRoot.balanceFactor:
+        if rotRoot.balanceFactor is not None and newRoot.balanceFactor is not None:
             rotRoot.balanceFactor = rotRoot.balanceFactor + 1 - min(
                 newRoot.balanceFactor, 0)
             newRoot.balanceFactor = newRoot.balanceFactor + 1 + max(
