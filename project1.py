@@ -291,6 +291,8 @@ class AvlTree(BinarySearchTree):
         else:
             if rotRoot.isRightChild():
                 rotRoot.parent.rightChild = newRoot
+            else:
+                rotRoot.parent.leftChild = newRoot
         newRoot.rightChild = rotRoot
         rotRoot.parent = newRoot
         if rotRoot is not None and rotRoot.balanceFactor is not None and newRoot is not None and newRoot.balanceFactor is not None:
