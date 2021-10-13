@@ -8,6 +8,7 @@ project1.py - Sorting and Searching
 import matplotlib.pyplot as plt
 
 
+
 class TreeNode:
     def __init__(self, key, val, left=None, right=None, parent=None):
         self.key = key
@@ -232,8 +233,6 @@ class AvlTree(BinarySearchTree):
     strives to keep itself balanced '''
 
     def _put(self, key, val, currentNode):
-        if currentNode is None:
-            return False
         if key < currentNode.key:
             if currentNode.hasLeftChild():
                 self._put(key, val, currentNode.leftChild)
@@ -248,12 +247,10 @@ class AvlTree(BinarySearchTree):
                 self.updateBalance(currentNode.rightChild)
 
     def updateBalance(self, node):
-        if node is None:
-            return False
-        if node.balanceFactor > 1 or node.balanceFactor < -1:
+        if node.balanceFactor is not None and (node.balanceFactor > 1 or node.balanceFactor < -1):
             self.rebalance(node)
             return
-        if node.parent is not None:
+        if node.parent is not None and node.parent.balanceFactor:
             if node.isLeftChild():
                 node.parent.balanceFactor += 1
             elif node.isRightChild():
@@ -277,10 +274,9 @@ class AvlTree(BinarySearchTree):
                 rotRoot.parent.rightChild = newRoot
         newRoot.leftChild = rotRoot
         rotRoot.parent = newRoot
-        if rotRoot:
+        if rotRoot.balanceFactor is not None and newRoot.balanceFactor:
             rotRoot.balanceFactor = rotRoot.balanceFactor + 1 - min(
                 newRoot.balanceFactor, 0)
-        if newRoot:
             newRoot.balanceFactor = newRoot.balanceFactor + 1 + max(
                 rotRoot.balanceFactor, 0)
 
@@ -297,21 +293,20 @@ class AvlTree(BinarySearchTree):
                 rotRoot.parent.rightChild = newRoot
         newRoot.rightChild = rotRoot
         rotRoot.parent = newRoot
-        rotRoot.balanceFactor = rotRoot.balanceFactor + 1 - min(
-            newRoot.balanceFactor, 0)
-        newRoot.balanceFactor = newRoot.balanceFactor + 1 + max(
-            rotRoot.balanceFactor, 0)
+        if rotRoot.balanceFactor is not None and newRoot.balanceFactor:
+            rotRoot.balanceFactor = rotRoot.balanceFactor + 1 - min(
+                newRoot.balanceFactor, 0)
+            newRoot.balanceFactor = newRoot.balanceFactor + 1 + max(
+                rotRoot.balanceFactor, 0)
 
     def rebalance(self, node):
-        if node is None:
-            return False
-        if node.balanceFactor < 0:
+        if node.balanceFactor is not None and node.balanceFactor < 0:
             if node.rightChild.balanceFactor > 0:
                 self.rotateRight(node.rightChild)
                 self.rotateLeft(node)
             else:
                 self.rotateLeft(node)
-        elif node.balanceFactor > 0:
+        elif node.balanceFactor is not None and node.balanceFactor > 0:
             if node.leftChild.balanceFactor < 0:
                 self.rotateLeft(node.leftChild)
                 self.rotateRight(node)
