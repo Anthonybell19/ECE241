@@ -137,7 +137,7 @@ class StockLibrary:
     def loadData(self, filename: str):
         file = open(filename, 'r')
         stocks = []
-        infoList = file.readlines()[1: 400]
+        infoList = file.readlines()[1:]
         for i in infoList:
             tempList = i.split('|')
             stocks.append(Stock(tempList[0], tempList[1], tempList[2], tempList[3:22]))
