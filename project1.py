@@ -283,6 +283,8 @@ class AvlTree(BinarySearchTree):
                 rotRoot.balanceFactor, 0)
 
     def rotateRight(self, rotRoot):
+        if rotRoot is None:
+            return False
         newRoot = rotRoot.leftChild
         rotRoot.leftChild = newRoot.rightChild
         if newRoot.rightChild is not None:
