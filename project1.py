@@ -285,19 +285,19 @@ class AvlTree(BinarySearchTree):
     def rotateRight(self, rotRoot):
         if rotRoot is None:
             return False
-        newRoot = rotRoot.left
-        rotRoot.left = newRoot.right
-        if newRoot.right:
-            newRoot.right.parent = rotRoot
+        newRoot = rotRoot.leftChild
+        rotRoot.leftChild = newRoot.rightChild
+        if newRoot.rightChild:
+            newRoot.rightChild.parent = rotRoot
         newRoot.parent = rotRoot.parent
         if rotRoot is self.getRoot():
             self.setRoot(newRoot)
         else:
-            if rotRoot.parent.right is rotRoot:
-                rotRoot.parent.right = newRoot
+            if rotRoot.parent.rightChild is rotRoot:
+                rotRoot.parent.rightChild = newRoot
             else:
-                rotRoot.parent.left = newRoot
-        newRoot.right = rotRoot
+                rotRoot.parent.leftChild = newRoot
+        newRoot.rightChild = rotRoot
         rotRoot.parent = newRoot
         rotRoot.balance = rotRoot.balance - 1 - max(newRoot.balance, 0)
         newRoot.balance = newRoot.balance - 1 + min(rotRoot.balance, 0)
