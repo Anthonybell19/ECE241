@@ -66,11 +66,11 @@ class TreeNode:
                 self.rightChild = TreeNode(key, data)
                 return True
 
-    def find(self, key):
+    def find(self, key, stock):
         if self.key == key:
-            return 'name: ' + self.sname + '; ' + 'symbol: ' + self.symbol + '; ' + 'val: ' + str(
-                        round(float(self.val),1)) + '; ' + \
-                           'price:' + str(self.prices[len(self.prices) - 1])
+            return 'name: ' + stock.sname + '; ' + 'symbol: ' + stock.symbol + '; ' + 'val: ' + str(
+                        round(float(stock.val),1)) + '; ' + \
+                           'price:' + str(stock.prices[len(stock.prices) - 1])
         elif key < self.key:
             if self.hasLeftChild():
                 return self.leftChild.find(key)
@@ -233,8 +233,11 @@ class StockLibrary:
 
 
     def searchBST(self, query, current='dnode'):
+        for i in self.stockList:
+            if i.symbol == query:
+                stock = i
         if self.bst:
-            return self.bst.find(query)
+            return self.bst.find(query, stock)
         else:
             return 'stock not found'
 
