@@ -444,7 +444,6 @@ class StockLibrary:
     """
 
     def buildBST(self):
-        node = TreeNode('', '')
         tree = AvlTree()
         for i in self.stockList:
             node = TreeNode(i.symbol, i.val)
