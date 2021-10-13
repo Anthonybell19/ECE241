@@ -449,7 +449,8 @@ class StockLibrary:
         for i in self.stockList:
             node = TreeNode(i.symbol, i.val)
             tree.put(i.symbol, i.val)
-            tree.rebalance(node)
+            if node is not None:
+                tree.rebalance(node)
         self.bst = tree.root
 
     """
