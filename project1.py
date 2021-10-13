@@ -247,10 +247,10 @@ class AvlTree(BinarySearchTree):
                 self.updateBalance(currentNode.rightChild)
 
     def updateBalance(self, node):
-        if node is not None and (node.balanceFactor > 1 or node.balanceFactor < -1):
+        if node.balanceFactor > 1 or node.balanceFactor < -1:
             self.rebalance(node)
             return
-        if node is not None and node.parent is not None and node.parent.balanceFactor is not None:
+        if node.parent:
             if node.isLeftChild():
                 node.parent.balanceFactor += 1
             elif node.isRightChild():
@@ -306,13 +306,13 @@ class AvlTree(BinarySearchTree):
                 rotRoot.balanceFactor, 0)
 
     def rebalance(self, node):
-        if node is not None and node.balanceFactor < 0:
+        if node.balanceFactor < 0:
             if node.rightChild.balanceFactor > 0:
                 self.rotateRight(node.rightChild)
                 self.rotateLeft(node)
             else:
                 self.rotateLeft(node)
-        elif node is not None and node.balanceFactor > 0:
+        elif node.balanceFactor > 0:
             if node.leftChild.balanceFactor < 0:
                 self.rotateLeft(node.leftChild)
                 self.rotateRight(node)
