@@ -450,9 +450,10 @@ class StockLibrary:
         tree = AvlTree()
         for i in self.stockList:
             node = TreeNode(i.symbol, i.val)
-            if i and node is not None:
+            if i is not None and node is not None:
                 tree.put(i.symbol, i.val)
                 tree.updateBalance(node)
+                tree.rebalance(node)
         self.bst = tree.root
 
     """
