@@ -232,6 +232,8 @@ class AvlTree(BinarySearchTree):
     strives to keep itself balanced '''
 
     def _put(self, key, val, currentNode):
+        if currentNode is None:
+            return False
         if key < currentNode.key:
             if currentNode.hasLeftChild():
                 self._put(key, val, currentNode.leftChild)
@@ -246,6 +248,8 @@ class AvlTree(BinarySearchTree):
                 self.updateBalance(currentNode.rightChild)
 
     def updateBalance(self, node):
+        if node is None:
+            return False
         if node.balanceFactor > 1 or node.balanceFactor < -1:
             self.rebalance(node)
             return
@@ -297,6 +301,8 @@ class AvlTree(BinarySearchTree):
             rotRoot.balanceFactor, 0)
 
     def rebalance(self, node):
+        if node is None:
+            return False
         if node.balanceFactor < 0:
             if node.rightChild.balanceFactor > 0:
                 self.rotateRight(node.rightChild)
