@@ -305,7 +305,7 @@ class AvlTree(BinarySearchTree):
                 self.rotateLeft(node)
         elif node.balanceFactor > 0:
             if node.leftChild.balanceFactor < 0:
-                self.rotateLeft(node.leftchild)
+                self.rotateLeft(node.leftChild)
                 self.rotateRight(node)
             else:
                 self.rotateRight(node)
