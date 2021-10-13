@@ -55,13 +55,13 @@ class TreeNode:
             return False
         elif key < self.key:
             if self.hasLeftChild():
-                return self.leftChild.insert(key,data)
+                return self.leftChild.insert(key, data)
             else:
                 self.leftChild = TreeNode(key, data)
                 return True
         else:
             if self.hasRightChild():
-                return self.rightChild.insert(key,data)
+                return self.rightChild.insert(key, data)
             else:
                 self.rightChild = TreeNode(key, data)
                 return True
@@ -69,8 +69,8 @@ class TreeNode:
     def find(self, key, stock):
         if self.key == key:
             return 'name: ' + stock.sname + '; ' + 'symbol: ' + stock.symbol + '; ' + 'val: ' + str(
-                        round(float(stock.val),1)) + '; ' + \
-                           'price:' + str(stock.prices[len(stock.prices) - 1])
+                round(float(stock.val), 1)) + '; ' + \
+                   'price:' + str(stock.prices[len(stock.prices) - 1])
         elif key < self.key:
             if self.hasLeftChild():
                 return self.leftChild.find(key)
@@ -81,7 +81,6 @@ class TreeNode:
                 return self.rightChild.find(key)
             else:
                 return 'stock not found'
-
 
 
 """
@@ -109,7 +108,7 @@ class Stock:
 
     def __str__(self):
         return 'name: ' + self.sname + '; ' + 'symbol: ' + self.symbol + '; ' + 'val: ' + str(
-                        round(float(self.val),1)) + '; ' + \
+            round(float(self.val), 1)) + '; ' + \
                'price:' + str(self.prices[len(self.prices) - 1])
 
 
@@ -128,6 +127,7 @@ class StockLibrary:
         self.size = len(self.stockList)
         self.isSorted = False
         self.bst = None
+
     """
     The loadData method takes the file name of the input dataset,
     and stores the data of stocks into the library. 
@@ -159,13 +159,13 @@ class StockLibrary:
             for i in self.stockList:
                 if i.sname == query:
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
-                        round(float(i.val),1)) + '; ' + \
+                        round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
         if attribute == 'symbol':
             for i in self.stockList:
                 if i.symbol == query:
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
-                        round(float(i.val),1)) + '; ' + \
+                        round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
         return 'Stock not found'
 
@@ -174,8 +174,9 @@ class StockLibrary:
     The sorted array should be stored in the same stockList.
     Remember to change the isSorted variable after sorted
     """
+
     def quickSort(self):
-        self.quickSortHelper(self.stockList, 0, len(self.stockList)-1)
+        self.quickSortHelper(self.stockList, 0, len(self.stockList) - 1)
         self.isSorted = True
 
     def quickSortHelper(self, list, first, last):
@@ -186,7 +187,7 @@ class StockLibrary:
 
     def partition(self, list, first, last):
         pivotvalue = list[first].symbol
-        leftmark = first+1
+        leftmark = first + 1
         rightmark = last
         done = False
         while not done:
@@ -194,7 +195,7 @@ class StockLibrary:
                 leftmark = leftmark + 1
 
             while rightmark >= leftmark and list[rightmark].symbol >= pivotvalue:
-                rightmark = rightmark -1
+                rightmark = rightmark - 1
 
             if rightmark < leftmark:
                 done = True
@@ -206,7 +207,6 @@ class StockLibrary:
         temp = list[first]
         list[first] = list[rightmark]
         list[rightmark] = temp
-
 
         return rightmark
 
@@ -222,17 +222,14 @@ class StockLibrary:
             if self.bst:
                 self.bst.insert(i.symbol, i.val)
 
-
-
     """
     Search a stock based on the symbol attribute. 
     It returns the details of the stock as described in __str__() function 
     or a “Stock not found” message when there is no match. 
     """
 
-
-
     def searchBST(self, query, current='dnode'):
+        stock = Stock('', '', 0, [])
         for i in self.stockList:
             if i.symbol == query:
                 stock = i
