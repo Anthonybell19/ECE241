@@ -290,8 +290,8 @@ class AvlTree(BinarySearchTree):
         if newRoot.rightChild:
             newRoot.rightChild.parent = rotRoot
         newRoot.parent = rotRoot.parent
-        if rotRoot is self.getRoot():
-            self.setRoot(newRoot)
+        if rotRoot is self.root:
+            self.root = newRoot
         else:
             if rotRoot.parent.rightChild is rotRoot:
                 rotRoot.parent.rightChild = newRoot
