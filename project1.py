@@ -299,8 +299,8 @@ class AvlTree(BinarySearchTree):
                 rotRoot.parent.leftChild = newRoot
         newRoot.rightChild = rotRoot
         rotRoot.parent = newRoot
-        rotRoot.balance = rotRoot.balance - 1 - max(newRoot.balance, 0)
-        newRoot.balance = newRoot.balance - 1 + min(rotRoot.balance, 0)
+        rotRoot.balanceFactor = rotRoot.balanceFactor - 1 - max(newRoot.balanceFactor, 0)
+        newRoot.balanceFactor = newRoot.balanceFactor - 1 + min(rotRoot.balanceFactor, 0)
     def rebalance(self, node):
         if node.balanceFactor < 0:
             if node.rightChild.balanceFactor > 0:
