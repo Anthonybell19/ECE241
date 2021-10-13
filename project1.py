@@ -452,7 +452,7 @@ class StockLibrary:
             node = TreeNode(i.symbol, i.val)
             if i and node is not None:
                 tree.put(i.symbol, i.val)
-                tree.rebalance(node)
+                tree.updateBalance(node)
         self.bst = tree.root
 
     """
