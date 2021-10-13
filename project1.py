@@ -251,7 +251,7 @@ class AvlTree(BinarySearchTree):
             return
         if node.parent is not None:
             if node.isLeftChild():
-                node.parent.balancefactor += 1
+                node.parent.balanceFactor += 1
             elif node.isRightChild():
                 node.parent.balanceFactor -= 1
 
