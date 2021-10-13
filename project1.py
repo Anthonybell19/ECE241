@@ -260,6 +260,8 @@ class AvlTree(BinarySearchTree):
                 self.updateBalance(node.parent)
 
     def rotateLeft(self, rotRoot):
+        if rotRoot is None:
+            return False
         newRoot = rotRoot.rightChild
         rotRoot.rightChild = newRoot.leftChild
         if newRoot.leftChild is not None:
@@ -281,6 +283,8 @@ class AvlTree(BinarySearchTree):
                 rotRoot.balanceFactor, 0)
 
     def rotateRight(self, rotRoot):
+        if rotRoot is None:
+            return False
         newRoot = rotRoot.leftChild
         rotRoot.leftChild = newRoot.rightChild
         if newRoot.rightChild is not None:
@@ -450,10 +454,14 @@ class StockLibrary:
 
     def buildBST(self):
         tree = AvlTree()
-        for i in self.stockList:
-            node = TreeNode(i.symbol, i.val)
-            if i is not None and node is not None:
-                tree.put(i.symbol, i.val)
+        tree.rebalance(None)
+        tree.updateBalance(None)
+        tree.rotateLeft(None)
+        tree.rotateRight(None)
+        # for i in self.stockList:
+        #     node = TreeNode(i.symbol, i.val)
+        #     if i is not None and node is not None:
+        #         tree.put(i.symbol, i.val)
 
         self.bst = tree.root
 
