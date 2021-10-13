@@ -68,7 +68,9 @@ class TreeNode:
 
     def find(self, key):
         if self.key == key:
-            return self.payload
+            return 'name: ' + self.sname + '; ' + 'symbol: ' + self.symbol + '; ' + 'val: ' + str(
+                        round(float(self.val),1)) + '; ' + \
+                           'price:' + str(self.prices[len(self.prices) - 1])
         elif key < self.key:
             if self.hasLeftChild():
                 return self.leftChild.find(key)
