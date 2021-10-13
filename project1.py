@@ -73,12 +73,12 @@ class TreeNode:
                    'price:' + str(stock.prices[len(stock.prices) - 1])
         elif key < self.key:
             if self.hasLeftChild():
-                return self.leftChild.find(key)
+                return self.leftChild.find(key, stock)
             else:
                 return 'stock not found'
         else:
             if self.hasRightChild():
-                return self.rightChild.find(key)
+                return self.rightChild.find(key, stock)
             else:
                 return 'stock not found'
 
@@ -137,7 +137,7 @@ class StockLibrary:
     def loadData(self, filename: str):
         file = open(filename, 'r')
         stocks = []
-        infoList = file.readlines()[1:]
+        infoList = file.readlines()[1: 400]
         for i in infoList:
             tempList = i.split('|')
             stocks.append(Stock(tempList[0], tempList[1], tempList[2], tempList[3:22]))
