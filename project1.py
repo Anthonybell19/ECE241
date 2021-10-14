@@ -4,8 +4,7 @@ Project #1   Fall 2021
 project1.py - Sorting and Searching
 
 """
-
-
+import time
 
 
 class TreeNode:
@@ -357,16 +356,20 @@ class StockLibrary:
         self.size = len(self.stockList)
 
     def linearSearch(self, query: str, attribute: str):
-
+        linearStart = time.time()
         if attribute == 'name':  # see if searching by stock name
             for i in self.stockList:
                 if i.sname == query:  # iterate through list of stocks by name and return information if found
+                    linearEnd = time.time()
+                    print(linearEnd - linearStart)
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
                         round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
         if attribute == 'symbol':  # see if searching by stock symbol
             for i in self.stockList:
                 if i.symbol == query:  # iterate through list of stocks by symbol and return information if found
+                    linearEnd = time.time()
+                    print(linearEnd - linearStart)
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
                         round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
@@ -413,12 +416,14 @@ class StockLibrary:
         return rightmark
 
     def buildBST(self):
+        bstStart = time.time()
         tree = AvlTree()  # construct AVL tree
         for i in self.stockList:
             if i is not None:
                 tree.put(i.symbol, i.val)  # add to the binary tree, sort by the stock symbol
 
         self.bst = tree.root  # self the bst class variable to be the root of the tree
+        bstEnd = time.time()
 
     def searchBST(self, query, current='dnode'):
         stock = Stock('', '', 0, [])  # create a stock to be passed into find function later
@@ -437,14 +442,19 @@ class StockLibrary:
 if __name__ == '__main__':
     testStock = Stock('Exxon Mobil Corporation', 'XOM', 384845.80, [41.50, 43.50, 44.61, 44.96, 45.46, 46.84, 47.8])
     stockLib = StockLibrary()
-    testSymbol = 'GE'
+    testSymbol = 'GOOG'
     testName = 'General Electric Company'
     print("\n-------load dataset-------")
     stockLib.loadData("stock_database.csv")
 
+
     print("\n-------linear search-------")
+
     print(stockLib.linearSearch(testSymbol, "symbol"))
-    print(stockLib.linearSearch(testName, "name"))
+
+
+    # print(stockLib.linearSearch(testSymbol, "symbol"))
+    # print(stockLib.linearSearch(testName, "name"))
 
     print("\n-------quick sort-------")
     print(stockLib.isSorted)
@@ -452,7 +462,9 @@ if __name__ == '__main__':
     print(stockLib.isSorted)
 
     print("\n-------build BST-------")
+    bstStart = time.time()
     stockLib.buildBST()
-
+    bstEnd = time.time()
+    print(bstEnd - bstStart)
     print("\n---------search BST---------")
     print(stockLib.searchBST(testSymbol))
