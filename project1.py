@@ -368,8 +368,7 @@ class StockLibrary:
         if attribute == 'symbol':  # see if searching by stock symbol
             for i in self.stockList:
                 if i.symbol == query:  # iterate through list of stocks by symbol and return information if found
-                    linearEnd = time.time()
-                    print(linearEnd - linearStart)
+                    
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
                         round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
