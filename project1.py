@@ -4,6 +4,8 @@ Project #1   Fall 2021
 project1.py - Sorting and Searching
 
 """
+import math
+import random
 import time
 
 
@@ -356,20 +358,15 @@ class StockLibrary:
         self.size = len(self.stockList)
 
     def linearSearch(self, query: str, attribute: str):
-        linearStart = time.time()
         if attribute == 'name':  # see if searching by stock name
             for i in self.stockList:
                 if i.sname == query:  # iterate through list of stocks by name and return information if found
-                    linearEnd = time.time()
-                    print(linearEnd - linearStart)
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
                         round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
         if attribute == 'symbol':  # see if searching by stock symbol
             for i in self.stockList:
                 if i.symbol == query:  # iterate through list of stocks by symbol and return information if found
-                    linearEnd = time.time()
-                    print(linearEnd - linearStart)
                     return 'name: ' + i.sname + '; ' + 'symbol: ' + i.symbol + '; ' + 'val: ' + str(
                         round(float(i.val), 1)) + '; ' + \
                            'price:' + str(i.prices[len(i.prices) - 1])
@@ -425,13 +422,9 @@ class StockLibrary:
         self.bst = tree.root  # self the bst class variable to be the root of the tree
         bstEnd = time.time()
 
-    def searchBST(self, query, current='dnode'):
-        stock = Stock('', '', 0, [])  # create a stock to be passed into find function later
-        for i in self.stockList:
-            if i.symbol == query:
-                stock = i  # find corresponding stock obj
+    def searchBST(self, query, currentStock):
         if self.bst:
-            return self.bst.find(query, stock)  # search binary tree for obj, use stock obj for returning info
+            return self.bst.find(query, currentStock)  # search binary tree for obj, use stock obj for returning info
         else:
             return 'stock not found'
 
@@ -440,6 +433,8 @@ class StockLibrary:
 
 # WRITE YOUR OWN TEST UNDER THIS IF YOU NEED
 if __name__ == '__main__':
+    ran = random.randint(0,743)
+
     testStock = Stock('Exxon Mobil Corporation', 'XOM', 384845.80, [41.50, 43.50, 44.61, 44.96, 45.46, 46.84, 47.8])
     stockLib = StockLibrary()
     testSymbol = 'GOOG'
@@ -450,7 +445,16 @@ if __name__ == '__main__':
 
     print("\n-------linear search-------")
 
-    print(stockLib.linearSearch(testSymbol, "symbol"))
+    newList = stockLib.stockList[ran:ran + 267]
+    count = 0
+    for i in stockLib.stockList:
+        linearStart = time.time()
+        symbol = i.symbol
+        stockLib.linearSearch(symbol, "symbol")
+        linearEnd = time.time()
+        count += linearEnd-linearStart
+
+    print(count/len(stockLib.stockList))
 
 
     # print(stockLib.linearSearch(testSymbol, "symbol"))
@@ -462,9 +466,63 @@ if __name__ == '__main__':
     print(stockLib.isSorted)
 
     print("\n-------build BST-------")
-    bstStart = time.time()
+    buildStart = time.time()
     stockLib.buildBST()
-    bstEnd = time.time()
-    print(bstEnd - bstStart)
+    buildEnd = time.time()
+    print(buildEnd - buildStart)
     print("\n---------search BST---------")
-    print(stockLib.searchBST(testSymbol))
+    count = 0
+    for i in stockLib.stockList:
+        bstStart = time.time()
+        symbol = i.symbol
+        stockLib.searchBST(symbol, i)
+        bstEnd = time.time()
+        count += bstEnd - bstStart
+    print(count / len(stockLib.stockList))
+    print("\n---------longest stock name---------")
+    nameLen = 0
+    name = ''
+    stock = Stock('','',0,[])
+    for i in stockLib.stockList:
+        if len(i.sname) > nameLen:
+            nameLen = len(name)
+            name = i.sname
+            stock = i
+    print(name)
+    print(nameLen)
+    print(stock)
+
+    firstDay = 0
+    lastDay = 0
+    change = 0
+    lengthOfMonth = 0
+    monthList = []
+    stock = Stock('', '', 0, [])
+    for i in stockLib.stockList:
+        monthList = i.prices
+        lengthOfMonth = len(monthList)
+        firstDay = float(monthList[0])
+        lastDay = float(monthList[len(monthList) - 1])
+        if (firstDay - lastDay) / lengthOfMonth > change:
+            change = (firstDay - lastDay) / lengthOfMonth
+            stock = i
+
+    print(change)
+    print(stock)
+    firstDay = 0
+    lastDay = 0
+    change = 0
+    lengthOfMonth = 0
+    monthList = []
+    stock = Stock('','',0,[])
+    for i in stockLib.stockList:
+        monthList = i.prices
+        lengthOfMonth = len(monthList)
+        firstDay = float(monthList[0])
+        lastDay = float(monthList[len(monthList)-1])
+        if (firstDay - lastDay)/lengthOfMonth < change:
+            change = (firstDay - lastDay)/lengthOfMonth
+            stock = i
+
+    print(change)
+    print(stock)
