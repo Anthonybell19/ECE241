@@ -24,7 +24,6 @@ class Solution:
         start = 0  # Start position of longest palindrome
         end = 0  # End position of longest palindrome
         list = []
-        str = ''
         diff = 0
 
         for i in range(0, len(s)):
