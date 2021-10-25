@@ -53,10 +53,8 @@ class Solution:
         if left >-1 and right < len(s):
             if s[left] == s[right]:
                 return self.expand_around(s,left-1, right+1)
-            else:
-                return [left + 1, right - 1]
-        else:
-                return [left+1,right-1]
+
+        return [left+1,right-1]
 
         pass
 
