@@ -32,27 +32,27 @@ class Solution:
 
         ''' 3
         Find the shortest cycle in a directed graph'''
-        ans = 'FILL YOUR ANSWER'
+        ans = 'DFS'
         print(ans)
 
         ''' 4
         Find the longest cycle in a directed graph'''
-        ans = 'FILL YOUR ANSWER'
+        ans = 'DFS'
         print(ans)
 
         ''' 5
         Which tree traversal scheme uses more memory'''
-        ans = 'FILL YOUR ANSWER'
+        ans = 'BFS'
         print(ans)
 
         ''' 6
         Which traversal scheme can be implemented using a queue'''
-        ans = 'FILL YOUR ANSWER'
+        ans = 'BFS'
         print(ans)
 
         ''' 7
         Finding the destination of a packet routed through a network'''
-        ans = 'FILL YOUR ANSWER'
+        ans = 'BOTH'
         print(ans)
 
 
