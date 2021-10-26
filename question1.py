@@ -15,7 +15,7 @@ test_cases = [
     "saippuakivikauppias",
     "aaaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "kkkkkkkkkkkkkkkkkkkkkkdldkkkkkkkkkkkkkkkkkkkkkk",
-    "ddddddddddddddddddddddddddddddddddddddddddddddddddks"
+    "ddddddddddddddddddddddddddddddddddddddddddddddddddks",''
 ]
 
 
@@ -45,7 +45,8 @@ class Solution:
             '''
             Fill your code here!
             '''
-
+        if s == '':
+            return
         return s[start: end + 1]
 
     def expand_around(self, s, left, right):
