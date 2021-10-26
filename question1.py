@@ -46,7 +46,7 @@ class Solution:
             Fill your code here!
             '''
         if diff ==0:
-            return s
+            return ''
         return s[start: end + 1]
 
     def expand_around(self, s, left, right):
