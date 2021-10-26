@@ -41,9 +41,12 @@ class Solution:
             #         abba -> center is bb
             # Try both methods and see which one gives the longer palindome.
 
+
             '''
             Fill your code here!
             '''
+        if diff ==0:
+            return s
         return s[start: end + 1]
 
     def expand_around(self, s, left, right):
@@ -53,10 +56,8 @@ class Solution:
         if left >-1 and right < len(s):
             if s[left] == s[right]:
                 return self.expand_around(s,left-1, right+1)
-            else:
-                return [left + 1, right - 1]
-        else:
-                return [left+1,right-1]
+
+        return [left+1,right-1]
 
         pass
 
