@@ -5,17 +5,11 @@ question1.py - DP planks with turtle
 """
 
 ### Longest Palindrome
-test_cases = [
-     "a",
-    "abaab",
-    "racecar",
-    "bullet",
-    "rarfile",
-    "computer", "windows",
-    "saippuakivikauppias",
-    "aaaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "kkkkkkkkkkkkkkkkkkkkkkdldkkkkkkkkkkkkkkkkkkkkkk",
-    "ddddddddddddddddddddddddddddddddddddddddddddddddddks",''
+test_cases = ["a", "rarfile", "0000000000000ooooo00ooooo", "windows", "saippuakivikauppias",
+     "abrakadabra", "123412341234", "professordigbo", "tarattarat", "bab", "a123321a", "kd",
+     "123232223388939389393837389393999999999999999999999999999999999338839",
+     "ululululululululululululululululululululululullululululululululululululululul",
+     "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabkkkkkkl"
 ]
 
 
@@ -45,8 +39,7 @@ class Solution:
             '''
             Fill your code here!
             '''
-        if s == '':
-            return
+
         return s[start: end + 1]
 
     def expand_around(self, s, left, right):
