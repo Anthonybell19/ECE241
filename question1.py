@@ -57,4 +57,5 @@ if __name__ == "__main__":
 
     for test_case in test_cases:
         print(solution.longestPalindrome(test_case))
+
     print('O(n^2)')
