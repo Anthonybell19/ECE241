@@ -17,7 +17,7 @@ class Fence_Builder:
             minPlanks = [0,0...0] (64)
             planksUsed = [0,0...0] (64)
         """
-        for plank in range(totalDistance+1):
+        for plank in range(totalDistance):
             plankCount = plank
             newPlank = 1
             for j in [p for p in plankList if p <= plank]:
