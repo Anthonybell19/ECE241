@@ -23,8 +23,12 @@ class ISPNetwork:
 
     def pathExist(self, router1, route2):
         r1 = self.network.getVertex(router1)
-        return self.testPath(r1, route2)
-
+        b = self.testPath(r1, route2)
+        self.resetGraph()
+        return b
+    def resetGraph(self,):
+        for i in self.network:
+            i.setColor('white')
     def testPath(self, start, checkId):
         start.setDistance(0)
         start.setPred(None)
