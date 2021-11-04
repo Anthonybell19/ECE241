@@ -26,25 +26,22 @@ class ISPNetwork:
         b = self.testPath(r1, route2)
         self.resetGraph()
         return b
-    def resetGraph(self,):
+    def resetGraph(self):
         for i in self.network:
             i.setColor('white')
     def testPath(self, start, checkId):
-        # start.setDistance(0)
-        # start.setPred(None)
         vertQueue = Queue()
         vertQueue.enqueue(start)
         while (vertQueue.size() > 0):
             currentVert = vertQueue.dequeue()
-            for nbr in currentVert.getConnections():
-                if nbr.getId() == checkId:
-                    return True
-                if nbr.getColor() == 'white':
-                    nbr.setColor('gray')
-                    # nbr.setDistance(currentVert.getDistance() + 1)
-                    # nbr.setPred(currentVert)
-                    vertQueue.enqueue(nbr)
-            currentVert.setColor('black')
+            if currentVert.getConnections():
+                for nbr in currentVert.getConnections():
+                    if nbr.getColor() == 'white':
+                        if nbr.getId() == checkId:
+                            return True
+                        nbr.setColor('gray')
+                        vertQueue.enqueue(nbr)
+                currentVert.setColor('black')
         return False
 
 
