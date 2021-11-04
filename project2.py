@@ -1,5 +1,8 @@
+
+
 from Graph import *
 import random
+
 
 class ISPNetwork:
 
@@ -15,28 +18,32 @@ class ISPNetwork:
             l = i.split(',')
             w = l[2].split('\n')
             weight = float(w[0])
-            graph.addEdge(l[0],l[1], weight)
+            graph.addEdge(l[0], l[1], weight)
         self.network = graph
-
 
     def pathExist(self, router1, route2):
         r1 = self.network.getVertex(router1)
-        r2 = self.network.getVertex(route2)
-        l = self.findNeighbors(r1.getConnections(), []),
-        for i in l:
-            if r2.getId() in i:
-                return True
+        return self.testPath(r1, route2)
+
+    def testPath(self, start, checkId):
+        start.setDistance(0)
+        start.setPred(None)
+        vertQueue = Queue()
+        vertQueue.enqueue(start)
+        while (vertQueue.size() > 0):
+            currentVert = vertQueue.dequeue()
+            for nbr in currentVert.getConnections():
+                if nbr.getId() == checkId:
+                    return True
+                if nbr.getColor() == 'white':
+                    nbr.setColor('gray')
+                    nbr.setDistance(currentVert.getDistance() + 1)
+                    nbr.setPred(currentVert)
+                    vertQueue.enqueue(nbr)
+            currentVert.setColor('black')
         return False
 
 
-    def findNeighbors(self, vertList, l):
-        if vertList:
-            for i in vertList:
-                if i.getId() not in l:
-                    l.append(i.getId())
-                    return self.findNeighbors(i.getConnections(), l)
-
-        return l
     def buildMST(self):
         pass
 
@@ -58,7 +65,6 @@ class ISPNetwork:
         return sum([ISPNetwork.nodeEdgeWeight(v) for v in g]) // 2
 
 
-
 if __name__ == '__main__':
     print("--------- Task1 build graph ---------")
     # Note: You should try all six dataset. This is just a example using 1221.csv
@@ -68,7 +74,8 @@ if __name__ == '__main__':
     print("--------- Task2 check if path exists ---------")
     routers = [v.id for v in random.sample(list(net.network.vertList.values()), 5)]
     for i in range(4):
-        print('Router1:', routers[i], ', Router2:', routers[i+1], 'path exist?:', net.pathExist(routers[i], routers[i+1]))
+        print('Router1:', routers[i], ', Router2:', routers[i + 1], 'path exist?:',
+              net.pathExist(routers[i], routers[i + 1]))
 
     print("--------- Task3 build MST ---------")
     net.buildMST()
@@ -77,12 +84,12 @@ if __name__ == '__main__':
 
     print("--------- Task4 find shortest path in MST ---------")
     for i in range(4):
-        print(routers[i], routers[i+1], 'Path:', net.findPath(routers[i], routers[i+1]))
+        print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
 
     print("--------- Task5 find shortest path in original graph ---------")
     for i in range(4):
-        print(routers[i], routers[i+1], 'Path:', net.findForwardingPath(routers[i], routers[i+1]))
+        print(routers[i], routers[i + 1], 'Path:', net.findForwardingPath(routers[i], routers[i + 1]))
 
     print("--------- Task6 find path in LowestMaxWeightFirst algorithm ---------")
     for i in range(4):
-        print(routers[i], routers[i+1], 'Path:', net.findPathMaxWeight(routers[i], routers[i+1]))
+        print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))
