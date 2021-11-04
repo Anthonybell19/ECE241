@@ -30,6 +30,7 @@ class ISPNetwork:
         for i in self.network:
             i.setColor('white')
 
+
     def testPath(self, start, checkId):
         vertQueue = Queue()
         vertQueue.enqueue(start)
@@ -47,7 +48,26 @@ class ISPNetwork:
 
 
     def buildMST(self):
+        d = [*self.network.getVertices()]
+        self.prim(self.network.getVertex(d[0]))
         pass
+
+    def prim(self, start):
+        self.MST = self.network
+        pq = PriorityQueue()
+        for v in self.MST:
+            v.setDistance(sys.maxsize)
+            v.setPred(None)
+        start.setDistance(0)
+        pq.buildHeap([(v.getDistance(), v) for v in self.MST])
+        while not pq.isEmpty():
+            currentVert = pq.delMin()
+            for nextVert in currentVert.getConnections():
+                newCost = currentVert.getWeight(nextVert)
+                if nextVert in pq and newCost < nextVert.getDistance():
+                    nextVert.setPred(currentVert)
+                    nextVert.setDistance(newCost)
+                    pq.decreaseKey(nextVert, newCost)
 
     def findPath(self, router1, router2):
         pass
