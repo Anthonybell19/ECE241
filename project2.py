@@ -1,5 +1,4 @@
 
-
 from Graph import *
 import random
 
@@ -26,15 +25,17 @@ class ISPNetwork:
         b = self.testPath(r1, route2)
         self.resetGraph()
         return b
+
     def resetGraph(self):
         for i in self.network:
             i.setColor('white')
+
     def testPath(self, start, checkId):
         vertQueue = Queue()
         vertQueue.enqueue(start)
-        while (vertQueue.size() > 0):
+        while vertQueue.size() > 0:
             currentVert = vertQueue.dequeue()
-            if currentVert.getConnections():
+            if currentVert is not None:
                 for nbr in currentVert.getConnections():
                     if nbr.getColor() == 'white':
                         if nbr.getId() == checkId:
@@ -77,6 +78,9 @@ if __name__ == '__main__':
     for i in range(4):
         print('Router1:', routers[i], ', Router2:', routers[i + 1], 'path exist?:',
               net.pathExist(routers[i], routers[i + 1]))
+
+
+
 
     print("--------- Task3 build MST ---------")
     net.buildMST()
