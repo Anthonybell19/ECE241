@@ -13,7 +13,8 @@ class ISPNetwork:
         info = file.readlines()
         for i in info:
             l = i.split(',')
-            weight = int(l[2][-2])
+            w = l[2].split('\n')
+            weight = float(w[0])
             graph.addEdge(l[0],l[1], weight)
         self.network = graph
 
