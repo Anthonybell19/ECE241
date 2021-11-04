@@ -21,13 +21,21 @@ class ISPNetwork:
     def pathExist(self, router1, route2):
         r1 = self.network.getVertex(router1)
         r2 = self.network.getVertex(route2)
-        bfs(self.network, self.network.getVertex(router1))
+        l = self.findNeighbors(r1.getConnections(), []),
+        for i in l:
+            if r2.getId() in i:
+                return True
+        return False
 
-        # else:
-        #     return False
 
-        pass
+    def findNeighbors(self, vertList, l):
+        if vertList:
+            for i in vertList:
+                if i.getId() not in l:
+                    l.append(i.getId())
+                    return self.findNeighbors(i.getConnections(), l)
 
+        return l
     def buildMST(self):
         pass
 
@@ -47,20 +55,6 @@ class ISPNetwork:
     @staticmethod
     def totalEdgeWeight(g):
         return sum([ISPNetwork.nodeEdgeWeight(v) for v in g]) // 2
-def bfs(g, start):
-    visited = []
-    queue = []
-    visited.append(node)
-    queue.append(node)
-
-    while queue:  # Creating loop to visit each node
-        m = queue.pop(0)
-        print(m, end=" ")
-
-        for neighbour in graph[m]:
-            if neighbour not in visited:
-                visited.append(neighbour)
-                queue.append(neighbour)
 
 
 
