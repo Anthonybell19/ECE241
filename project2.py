@@ -30,8 +30,8 @@ class ISPNetwork:
         for i in self.network:
             i.setColor('white')
     def testPath(self, start, checkId):
-        start.setDistance(0)
-        start.setPred(None)
+        # start.setDistance(0)
+        # start.setPred(None)
         vertQueue = Queue()
         vertQueue.enqueue(start)
         while (vertQueue.size() > 0):
@@ -41,8 +41,8 @@ class ISPNetwork:
                     return True
                 if nbr.getColor() == 'white':
                     nbr.setColor('gray')
-                    nbr.setDistance(currentVert.getDistance() + 1)
-                    nbr.setPred(currentVert)
+                    # nbr.setDistance(currentVert.getDistance() + 1)
+                    # nbr.setPred(currentVert)
                     vertQueue.enqueue(nbr)
             currentVert.setColor('black')
         return False
