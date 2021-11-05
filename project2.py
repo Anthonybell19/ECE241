@@ -48,19 +48,25 @@ class ISPNetwork:
 
 
     def buildMST(self):
-        self.MST = self.network
-        d = [*self.MST.getVertices()]
-        self.BellmanFord(self.MST, self.MST.getVertex(d[0]))
+        tempGraph = self.network
+        d = [*tempGraph.getVertices()]
+        self.prim(tempGraph, tempGraph.getVertex(d[0]))
+        for vert in tempGraph:
+            for neighbor in vert.getConnections():
+                if neighbor.getPred() == vert:
+                    # create mst with bi-directional edges
+                    self.MST.addEdge(neighbor.getId(), vert.getId(), vert.getWeight(neighbor))
+                    self.MST.addEdge(vert.getId(), neighbor.getId(), vert.getWeight(neighbor))
+
         pass
 
-    def prim(self, start):
-        self.MST = self.network
+    def prim(self, G, start):
         pq = PriorityQueue() #queue to hold verts to be explored
-        for v in self.MST:
+        for v in G:
             v.setDistance(sys.maxsize)
             v.setPred(None)
         start.setDistance(0)
-        pq.buildHeap([(v.getDistance(), v) for v in self.MST]) # build heap of all verts
+        pq.buildHeap([(v.getDistance(), v) for v in G]) # build heap of all verts
         while not pq.isEmpty():
             currentVert = pq.delMin() # starting vert
             for nextVert in currentVert.getConnections(): # grabbing all neighbors of current vert
@@ -69,27 +75,6 @@ class ISPNetwork:
                     nextVert.setPred(currentVert)
                     nextVert.setDistance(newCost)
                     pq.decreaseKey(nextVert, newCost)
-
-    def BellmanFord(self,aGraph, src):
-        dist = {}
-        # Step 1: Initialize distances from src to all other vertices
-        # as INFINITE
-        for v in aGraph.getVertices():
-            if v == src:
-                dist[v] = 0
-            else:
-                dist[v] = float('inf')
-
-        # Step 2: Relax all edges |V| - 1 times. A simple shortest
-        # path from src to any other vertex can have at-most |V| - 1
-        # edge
-        for v in aGraph:
-            # Update dist value and parent index of the adjacent vertices of
-            # the picked vertex. Consider only those vertices which are still in
-            # queue
-            for nextVert in v.getConnections():
-                if dist[v.id] != float("Inf") and dist[v.id] + v.getWeight(nextVert) < dist[nextVert.id]:
-                    dist[nextVert.id] = dist[v.id] + v.getWeight(nextVert)
 
     def findPath(self, router1, router2):
         pass
@@ -113,7 +98,7 @@ if __name__ == '__main__':
     print("--------- Task1 build graph ---------")
     # Note: You should try all six dataset. This is just a example using 1221.csv
     net = ISPNetwork()
-    net.buildGraph('data/1221.csv')
+    net.buildGraph('data/3257.csv')
 
     print("--------- Task2 check if path exists ---------")
     routers = [v.id for v in random.sample(list(net.network.vertList.values()), 5)]
