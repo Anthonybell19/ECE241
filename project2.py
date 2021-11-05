@@ -29,6 +29,9 @@ class ISPNetwork:
     def resetGraph(self):
         for i in self.network:
             i.setColor('white')
+        if self.MST is not None:
+            for i in self.MST:
+                i.setColor('white')
 
 
     def testPath(self, start, checkId):
@@ -77,13 +80,18 @@ class ISPNetwork:
                     pq.decreaseKey(nextVert, newCost)
 
     def findPath(self, router1, router2):
-        path = []
+        pathList = []
+        path = ''
         if self.MST is not None:
             r1 = self.MST.getVertex(router1)
-            path = self.getPath(r1, router2)
+            pathList = self.getPath(r1, router2)
+        if pathList is not None:
+            for i in pathList:
+                path = path + i + '->'
+        else:
+            path = 'path not exist'
+        self.resetGraph()
         return path
-
-
     def getPath(self, start, checkId):
         l= []
         vertQueue = Queue()
