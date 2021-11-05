@@ -77,7 +77,34 @@ class ISPNetwork:
                     pq.decreaseKey(nextVert, newCost)
 
     def findPath(self, router1, router2):
-        pass
+        path = []
+        r1 = self.MST.getVertex(router1)
+        if self.pathExist(router1, router2):
+            for neighbor in r1.getConnections():
+                path = self.getPath(r1, router2)
+        return path
+
+    def getPath(self, start, checkId):
+        l= []
+        vertQueue = Queue()
+        vertQueue.enqueue(start)
+        while vertQueue.size() > 0:
+            currentVert = vertQueue.dequeue()
+            l.append(currentVert.getId())
+            if currentVert is not None:
+                for nbr in currentVert.getConnections():
+                    if nbr.getColor() == 'white':
+                        if nbr.getId() == checkId:
+                            return l
+                        nbr.setColor('gray')
+                        vertQueue.enqueue(nbr)
+                currentVert.setColor('black')
+        return l
+
+
+
+
+
 
     def findForwardingPath(self, router1, router2):
         pass
