@@ -48,28 +48,49 @@ class ISPNetwork:
 
 
     def buildMST(self):
-        d = [*self.network.getVertices()]
-        self.prim(self.network.getVertex(d[0]))
+        self.MST = self.network
+        d = [*self.MST.getVertices()]
+        self.BellmanFord(self.MST, self.MST.getVertex(d[0]))
         pass
 
     def prim(self, start):
         self.MST = self.network
-        pq = PriorityQueue()
+        pq = PriorityQueue() #queue to hold verts to be explored
         for v in self.MST:
             v.setDistance(sys.maxsize)
             v.setPred(None)
         start.setDistance(0)
-        pq.buildHeap([(v.getDistance(), v) for v in self.MST])
+        pq.buildHeap([(v.getDistance(), v) for v in self.MST]) # build heap of all verts
         while not pq.isEmpty():
-            currentVert = pq.delMin()
-            for nextVert in currentVert.getConnections():
+            currentVert = pq.delMin() # starting vert
+            for nextVert in currentVert.getConnections(): # grabbing all neighbors of current vert
                 newCost = currentVert.getWeight(nextVert)
-                if nextVert in pq and newCost < nextVert.getDistance() and currentVert.getPred() is not nextVert:
+                if nextVert in pq and newCost < nextVert.getDistance():
                     nextVert.setPred(currentVert)
                     nextVert.setDistance(newCost)
                     pq.decreaseKey(nextVert, newCost)
-                else:
-                    print('nah')
+
+    def BellmanFord(self,aGraph, src):
+        dist = {}
+        # Step 1: Initialize distances from src to all other vertices
+        # as INFINITE
+        for v in aGraph.getVertices():
+            if v == src:
+                dist[v] = 0
+            else:
+                dist[v] = float('inf')
+
+        # Step 2: Relax all edges |V| - 1 times. A simple shortest
+        # path from src to any other vertex can have at-most |V| - 1
+        # edge
+        for v in aGraph:
+            # Update dist value and parent index of the adjacent vertices of
+            # the picked vertex. Consider only those vertices which are still in
+            # queue
+            for nextVert in v.getConnections():
+                if dist[v.id] != float("Inf") and dist[v.id] + v.getWeight(nextVert) < dist[nextVert.id]:
+                    dist[nextVert.id] = dist[v.id] + v.getWeight(nextVert)
+
     def findPath(self, router1, router2):
         pass
 
