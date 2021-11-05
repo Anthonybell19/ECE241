@@ -77,8 +77,8 @@ class ISPNetwork:
                     pq.decreaseKey(nextVert, newCost)
 
     def findPath(self, router1, router2):
+        path = []
         if self.MST is not None:
-            path = []
             r1 = self.MST.getVertex(router1)
             path = self.getPath(r1, router2)
         return path
