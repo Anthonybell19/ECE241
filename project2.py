@@ -23,17 +23,18 @@ class ISPNetwork:
     def pathExist(self, router1, route2):
         r1 = self.network.getVertex(router1)
         b = self.testPath(r1, route2)
-        self.resetGraph()
+        self.resetNetwork()
         return b
 
-    def resetGraph(self):
+    def resetNetwork(self):
         if self.network is not None:
             for i in self.network:
                 i.setColor('white')
+
+    def resetMST(self):
         if self.MST is not None:
             for i in self.MST:
                 i.setColor('white')
-
 
     def testPath(self, start, checkId):
         vertQueue = Queue()
@@ -91,7 +92,7 @@ class ISPNetwork:
                 path = path + i + '->'
         else:
             path = 'path not exist'
-        self.resetGraph()
+        self.resetMST()
         return path
     def getPath(self, start, checkId):
         l= []
