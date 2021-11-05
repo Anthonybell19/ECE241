@@ -81,9 +81,9 @@ class ISPNetwork:
             path = []
             r1 = self.MST.getVertex(router1)
             if self.pathExist(router1, router2):
-                for neighbor in r1.getConnections():
-                    path = self.getPath(r1, router2)
+                path = self.getPath(r1, router2)
         return path
+
 
     def getPath(self, start, checkId):
         l= []
