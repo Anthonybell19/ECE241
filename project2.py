@@ -53,7 +53,6 @@ class ISPNetwork:
         pass
 
     def prim(self, start):
-        visited = []
         self.MST = self.network
         pq = PriorityQueue()
         for v in self.MST:
@@ -63,14 +62,14 @@ class ISPNetwork:
         pq.buildHeap([(v.getDistance(), v) for v in self.MST])
         while not pq.isEmpty():
             currentVert = pq.delMin()
-            visited.append(currentVert)
             for nextVert in currentVert.getConnections():
                 newCost = currentVert.getWeight(nextVert)
-                if nextVert in pq and newCost < nextVert.getDistance() and nextVert not in visited:
+                if nextVert in pq and newCost < nextVert.getDistance() and currentVert.getPred() is not nextVert:
                     nextVert.setPred(currentVert)
                     nextVert.setDistance(newCost)
                     pq.decreaseKey(nextVert, newCost)
-
+                else:
+                    print('nah')
     def findPath(self, router1, router2):
         pass
 
