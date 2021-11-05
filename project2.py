@@ -27,8 +27,9 @@ class ISPNetwork:
         return b
 
     def resetGraph(self):
-        for i in self.network:
-            i.setColor('white')
+        if self.network is not None:
+            for i in self.network:
+                i.setColor('white')
         if self.MST is not None:
             for i in self.MST:
                 i.setColor('white')
