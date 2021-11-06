@@ -82,34 +82,46 @@ class ISPNetwork:
                     pq.decreaseKey(nextVert, newCost)
 
     def findPath(self, router1, router2):
-        pathList = []
+        l = []
         path = ''
-        if self.MST is not None:
-            r1 = self.MST.getVertex(router1)
-            pathList = self.getPath(r1, router2)
-        if pathList is not None:
-            for i in pathList:
-                path = path + i + '->'
-        else:
-            path = 'path not exist'
+        r1 = self.MST.getVertex(router1)
+        self.dijkstra(self.MST, r1)
+        r2 = self.MST.getVertex(router2)
+        while r2.getPred() is not None and r2.getColor() == 'white':
+            r2.setColor('black')
+            l.append(r2.getId())
+            r2 = r2.getPred()
         self.resetMST()
-        return path
-    def getPath(self, start, checkId):
-        l= []
-        vertQueue = Queue()
-        vertQueue.enqueue(start)
-        while vertQueue.size() > 0:
-            currentVert = vertQueue.dequeue()
-            l.append(currentVert.getId())
-            if currentVert is not None:
-                for nbr in currentVert.getConnections():
-                    if nbr.getColor() == 'white':
-                        if nbr.getId() == checkId:
-                            return l
-                        nbr.setColor('gray')
-                        vertQueue.enqueue(nbr)
-                currentVert.setColor('black')
-        return l
+        if router1 in l:
+            l.reverse()
+            for i in l:
+                if i != router2:
+                    path = path + i + ' -> '
+                else:
+                    path = path + i
+            return path
+        else:
+            return 'path does not exist'
+
+
+
+
+
+    def dijkstra(self, aGraph, start):
+        pq = PriorityQueue()
+        start.setDistance(0)
+        pq.buildHeap([(v.getDistance(), v) for v in aGraph])
+        while not pq.isEmpty():
+            currentVert = pq.delMin()
+            for nextVert in currentVert.getConnections():
+                newDist = currentVert.getDistance() \
+                          + currentVert.getWeight(nextVert)
+                if newDist < nextVert.getDistance():
+                    nextVert.setDistance(newDist)
+                    nextVert.setPred(currentVert)
+                    pq.decreaseKey(nextVert, newDist)
+
+
 
 
 
