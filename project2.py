@@ -149,7 +149,7 @@ if __name__ == '__main__':
     print("--------- Task1 build graph ---------")
     # Note: You should try all six dataset. This is just a example using 1221.csv
     net = ISPNetwork()
-    net.buildGraph('data/1221.csv')
+    net.buildGraph('data/1755.csv')
 
     print("--------- Task2 check if path exists ---------")
     routers = [v.id for v in random.sample(list(net.network.vertList.values()), 5)]
@@ -166,8 +166,9 @@ if __name__ == '__main__':
     print('graph total edge weights', net.totalEdgeWeight(net.MST))
 
     print("--------- Task4 find shortest path in MST ---------")
-    for i in range(4):
-        print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
+    # for i in range(4):
+    #     print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
+    print(net.findPath('ViennaAustria242', 'GenevaSwitzerland250'))
 
 
     print("--------- Task5 find shortest path in original graph ---------")
