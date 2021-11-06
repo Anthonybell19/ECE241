@@ -87,7 +87,7 @@ class ISPNetwork:
         r1 = self.MST.getVertex(router1)
         self.dijkstra(self.MST, r1)
         r2 = self.MST.getVertex(router2)
-        while r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
+        while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             l.append(r2.getId())
             r2 = r2.getPred()
