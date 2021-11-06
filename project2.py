@@ -100,8 +100,8 @@ class ISPNetwork:
                     path = path + i + ' -> '
                 else:
                     path = path + i
-        else:
-            path ='path does not exist'
+        # else:
+        #     path ='path does not exist'
 
         return path
 
