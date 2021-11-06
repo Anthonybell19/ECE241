@@ -92,6 +92,7 @@ class ISPNetwork:
             l.append(r2.getId())
             r2 = r2.getPred()
         l.append(r2.getId())
+        self.buildMST()
         self.resetMST()
         if router1 in l:
             l.reverse()
@@ -100,8 +101,8 @@ class ISPNetwork:
                     path = path + i + ' -> '
                 else:
                     path = path + i
-        # else:
-        #     path ='path does not exist'
+        else:
+            path ='path does not exist'
 
         return path
 
@@ -166,9 +167,9 @@ if __name__ == '__main__':
     print('graph total edge weights', net.totalEdgeWeight(net.MST))
 
     print("--------- Task4 find shortest path in MST ---------")
-    # for i in range(4):
-    #     print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
-    print(net.findPath('ViennaAustria242', 'GenevaSwitzerland250'))
+    for i in range(4):
+        print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
+    # print(net.findPath('ViennaAustria242', 'GenevaSwitzerland250'))
 
 
     print("--------- Task5 find shortest path in original graph ---------")
