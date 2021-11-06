@@ -87,7 +87,7 @@ class ISPNetwork:
         r1 = self.MST.getVertex(router1)
         self.dijkstra(self.MST, r1)
         r2 = self.MST.getVertex(router2)
-        while r2.getPred() is not None and r2.getColor() == 'white':
+        while r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             l.append(r2.getId())
             r2 = r2.getPred()
@@ -166,9 +166,9 @@ if __name__ == '__main__':
     print('graph total edge weights', net.totalEdgeWeight(net.MST))
 
     print("--------- Task4 find shortest path in MST ---------")
-    # for i in range(4):
-    #     print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
-    print(net.findPath('MackayAustralia3851', 'CanberraAustralia1821' ))
+    for i in range(4):
+        print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
+
 
     print("--------- Task5 find shortest path in original graph ---------")
     for i in range(4):
