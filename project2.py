@@ -91,6 +91,7 @@ class ISPNetwork:
             r2.setColor('black')
             l.append(r2.getId())
             r2 = r2.getPred()
+        l.append(r2.getId())
         self.resetMST()
         if router1 in l:
             l.reverse()
@@ -166,6 +167,7 @@ if __name__ == '__main__':
     print("--------- Task4 find shortest path in MST ---------")
     for i in range(4):
         print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
+    # print(net.findPath('BerlinGermany303', 'MunichGermany374' ))
 
     print("--------- Task5 find shortest path in original graph ---------")
     for i in range(4):
