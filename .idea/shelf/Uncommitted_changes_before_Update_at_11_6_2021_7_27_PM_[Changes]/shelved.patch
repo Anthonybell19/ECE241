@@ -1,0 +1,28 @@
+Index: project2.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n\r\nfrom Graph import *\r\nimport random\r\n\r\n\r\nclass ISPNetwork:\r\n\r\n    def __init__(self):\r\n        self.network = Graph()\r\n        self.MST = Graph()\r\n\r\n    def buildGraph(self, filename):\r\n        graph = Graph()\r\n        file = open(filename, 'r')\r\n        info = file.readlines()\r\n        for i in info:\r\n            l = i.split(',')\r\n            w = l[2].split('\\n')\r\n            weight = float(w[0])\r\n            graph.addEdge(l[0], l[1], weight)\r\n        self.network = graph\r\n\r\n    def pathExist(self, router1, route2):\r\n        r1 = self.network.getVertex(router1)\r\n        return self.testPath(r1, route2)\r\n\r\n    def testPath(self, start, checkId):\r\n        start.setDistance(0)\r\n        start.setPred(None)\r\n        vertQueue = Queue()\r\n        vertQueue.enqueue(start)\r\n        while (vertQueue.size() > 0):\r\n            currentVert = vertQueue.dequeue()\r\n            for nbr in currentVert.getConnections():\r\n                if nbr.getId() == checkId:\r\n                    return True\r\n                if nbr.getColor() == 'white':\r\n                    nbr.setColor('gray')\r\n                    nbr.setDistance(currentVert.getDistance() + 1)\r\n                    nbr.setPred(currentVert)\r\n                    vertQueue.enqueue(nbr)\r\n            currentVert.setColor('black')\r\n        return False\r\n\r\n\r\n    def buildMST(self):\r\n        pass\r\n\r\n    def findPath(self, router1, router2):\r\n        pass\r\n\r\n    def findForwardingPath(self, router1, router2):\r\n        pass\r\n\r\n    def findPathMaxWeight(self, router1, router2):\r\n        pass\r\n\r\n    @staticmethod\r\n    def nodeEdgeWeight(v):\r\n        return sum([w for w in v.connectedTo.values()])\r\n\r\n    @staticmethod\r\n    def totalEdgeWeight(g):\r\n        return sum([ISPNetwork.nodeEdgeWeight(v) for v in g]) // 2\r\n\r\n\r\nif __name__ == '__main__':\r\n    print(\"--------- Task1 build graph ---------\")\r\n    # Note: You should try all six dataset. This is just a example using 1221.csv\r\n    net = ISPNetwork()\r\n    net.buildGraph('data/1221.csv')\r\n\r\n    print(\"--------- Task2 check if path exists ---------\")\r\n    routers = [v.id for v in random.sample(list(net.network.vertList.values()), 5)]\r\n    for i in range(4):\r\n        print('Router1:', routers[i], ', Router2:', routers[i + 1], 'path exist?:',\r\n              net.pathExist(routers[i], routers[i + 1]))\r\n\r\n    print(\"--------- Task3 build MST ---------\")\r\n    net.buildMST()\r\n    print('graph node size', net.MST.numVertices)\r\n    print('graph total edge weights', net.totalEdgeWeight(net.MST))\r\n\r\n    print(\"--------- Task4 find shortest path in MST ---------\")\r\n    for i in range(4):\r\n        print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))\r\n\r\n    print(\"--------- Task5 find shortest path in original graph ---------\")\r\n    for i in range(4):\r\n        print(routers[i], routers[i + 1], 'Path:', net.findForwardingPath(routers[i], routers[i + 1]))\r\n\r\n    print(\"--------- Task6 find path in LowestMaxWeightFirst algorithm ---------\")\r\n    for i in range(4):\r\n        print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project2.py b/project2.py
+--- a/project2.py	(revision 8bbbd41e92715ecfef4049ccd9c3fdfc4798ac9a)
++++ b/project2.py	(date 1636044570392)
+@@ -33,12 +33,12 @@
+         while (vertQueue.size() > 0):
+             currentVert = vertQueue.dequeue()
+             for nbr in currentVert.getConnections():
+-                if nbr.getId() == checkId:
+-                    return True
+-                if nbr.getColor() == 'white':
++                if nbr.getColor() == 'white':
++                    if nbr.getId() == checkId:
++                        return True
+                     nbr.setColor('gray')
+-                    nbr.setDistance(currentVert.getDistance() + 1)
+-                    nbr.setPred(currentVert)
++                    # nbr.setDistance(currentVert.getDistance() + 1)
++                    # nbr.setPred(currentVert)
+                     vertQueue.enqueue(nbr)
+             currentVert.setColor('black')
+         return False
