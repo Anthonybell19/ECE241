@@ -86,16 +86,16 @@ class ISPNetwork:
     def findPath(self, router1, router2):
         self.resetMST()
         if router1 not in self.MST.getVertices() and router1 not in self.MST.getVertices():
-            return 'path not exist'
+            return 'path not exist 1'
         l = []
         path = ''
         r1 = self.MST.getVertex(router1)
         if r1.getConnections() is None:
-            return 'path not exist'
+            return 'path not exist 2'
         self.dijkstra(self.MST, r1)
         r2 = self.MST.getVertex(router2)
         if r2.getConnections() is None:
-            return 'path not exist'
+            return 'path not exist 3'
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             l.append(r2.getId())
@@ -109,7 +109,7 @@ class ISPNetwork:
                 else:
                     path = path + i
         else:
-            path ='path not exist'
+            path ='path not exist 4'
 
         return path
 
