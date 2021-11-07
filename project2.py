@@ -153,8 +153,7 @@ class ISPNetwork:
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             l.append(r2.getId())
-            if r2 in neighbors:
-                weight += r1.getWeight(r2.getId())
+            weight += r2.getWeight(r2.getPred())
             r2 = r2.getPred()
         if r2 is not None:
             l.append(r2.getId())
@@ -164,7 +163,7 @@ class ISPNetwork:
                 if i != router2:
                     path = path + i + ' -> '
                 else:
-                    path = path + i
+                    path = path + i + ' (' + str(weight) + ')'
         else:
             path = 'path not exist'
 
