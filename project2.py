@@ -105,7 +105,7 @@ class ISPNetwork:
                 else:
                     path = path + i
         else:
-            path ='path not exist 4'
+            path ='path not exist'
 
         self.resetMST()
         # self.buildMST()
