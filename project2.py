@@ -166,8 +166,8 @@ if __name__ == '__main__':
     print('graph total edge weights', net.totalEdgeWeight(net.MST))
 
     print("--------- Task4 find shortest path in MST ---------")
-    # for i in range(4):
-    #     print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
+    for i in range(4):
+        print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
     print(net.findPath('ViennaAustria242', 'GenevaSwitzerland250'))
 
 
