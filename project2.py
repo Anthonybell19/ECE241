@@ -86,16 +86,16 @@ class ISPNetwork:
     def findPath(self, router1, router2):
         self.resetMST()
         if router1 not in self.MST.getVertices() and router1 not in self.MST.getVertices():
-            return 'path does not exist'
+            return 'path not exist'
         l = []
         path = ''
         r1 = self.MST.getVertex(router1)
         if r1.getConnections() is None:
-            return 'path does not exist'
+            return 'path not exist'
         self.dijkstra(self.MST, r1)
         r2 = self.MST.getVertex(router2)
         if r2.getConnections() is None:
-            return 'path does not exist'
+            return 'path not exist'
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             l.append(r2.getId())
@@ -109,7 +109,7 @@ class ISPNetwork:
                 else:
                     path = path + i
         else:
-            path ='path does not exist'
+            path ='path not exist'
 
         return path
 
@@ -178,8 +178,9 @@ if __name__ == '__main__':
     #     print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
     net.MST.addVertex('asxa')
     net.MST.addVertex('')
+    net.MST.addEdge('asxa','GenevaSwitzerland250', 5 )
     print(net.MST.getVertex('asxa'))
-    print(net.findPath('', 'GenevaSwitzerland250'))
+    print(net.findPath('asxa', 'GenevaSwitzerland250'))
 
 
     print("--------- Task5 find shortest path in original graph ---------")
