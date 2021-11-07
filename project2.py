@@ -29,7 +29,10 @@ class ISPNetwork:
     def resetNetwork(self):
         if self.network is not None:
             for i in self.network:
-                i.setColor('white')
+                if i is not None:
+                    i.setColor('white')
+                    i.setDistance(sys.maxsize)
+                    i.setPred(None)
 
 
     def resetMST(self):
@@ -139,6 +142,36 @@ class ISPNetwork:
 
 
     def findForwardingPath(self, router1, router2):
+        l = []
+        weight = 0
+        path = ''
+        r1 = self.network.getVertex(router1)
+        neighbors = r1.getConnections()
+        if self.network is not None and r1 is not None:
+            self.dijkstra(self.network, r1)
+        r2 = self.network.getVertex(router2)
+        while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
+            r2.setColor('black')
+            l.append(r2.getId())
+            if r2 in neighbors:
+                weight += r1.getWeight(r2.getId())
+            r2 = r2.getPred()
+        if r2 is not None:
+            l.append(r2.getId())
+        if router1 in l:
+            l.reverse()
+            for i in l:
+                if i != router2:
+                    path = path + i + ' -> '
+                else:
+                    path = path + i
+        else:
+            path = 'path not exist'
+
+        self.resetNetwork()
+        # self.buildMST()
+        return path
+
         pass
 
     def findPathMaxWeight(self, router1, router2):
