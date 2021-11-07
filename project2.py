@@ -146,7 +146,8 @@ class ISPNetwork:
         weight = 0
         path = ''
         r1 = self.network.getVertex(router1)
-        neighbors = r1.getConnections()
+        if r1 is not None:
+            neighbors = r1.getConnections()
         if self.network is not None and r1 is not None:
             self.dijkstra(self.network, r1)
         r2 = self.network.getVertex(router2)
