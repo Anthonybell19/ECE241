@@ -92,11 +92,11 @@ class ISPNetwork:
         self.dijkstra(self.MST, r1)
         r2 = self.MST.getVertex(router2)
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
-            # print(r2.getId())
             r2.setColor('black')
             l.append(r2.getId())
             r2 = r2.getPred()
-        l.append(r2.getId())
+        if r2 is not None:
+            l.append(r2.getId())
         if router1 in l:
             l.reverse()
             for i in l:
