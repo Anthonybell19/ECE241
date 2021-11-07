@@ -31,10 +31,12 @@ class ISPNetwork:
             for i in self.network:
                 i.setColor('white')
 
+
     def resetMST(self):
         if self.MST is not None:
             for i in self.MST:
                 i.setColor('white')
+                i.setDistance(sys.maxsize)
 
     def testPath(self, start, checkId):
         vertQueue = Queue()
