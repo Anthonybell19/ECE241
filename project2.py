@@ -36,7 +36,8 @@ class ISPNetwork:
         if self.MST is not None:
             for i in self.MST:
                 i.setColor('white')
-                # i.setDistance(sys.maxsize)
+                i.setDistance(sys.maxsize)
+                i.setPred(None)
 
     def testPath(self, start, checkId):
         vertQueue = Queue()
@@ -55,6 +56,7 @@ class ISPNetwork:
 
 
     def buildMST(self):
+        self.MST= Graph()
         tempGraph = self.network
         d = [*tempGraph.getVertices()]
         self.prim(tempGraph, tempGraph.getVertex(d[0]))
@@ -84,19 +86,13 @@ class ISPNetwork:
                     pq.decreaseKey(nextVert, newCost)
 
     def findPath(self, router1, router2):
-        self.resetMST()
-        if router1 not in self.MST.getVertices() and router1 not in self.MST.getVertices():
-            return 'path not exist 1'
         l = []
         path = ''
         r1 = self.MST.getVertex(router1)
-        if r1.getConnections() is None:
-            return 'path not exist 2'
         self.dijkstra(self.MST, r1)
         r2 = self.MST.getVertex(router2)
-        if r2.getConnections() is None:
-            return 'path not exist 3'
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
+            # print(r2.getId())
             r2.setColor('black')
             l.append(r2.getId())
             r2 = r2.getPred()
@@ -111,6 +107,8 @@ class ISPNetwork:
         else:
             path ='path not exist 4'
 
+        self.resetMST()
+        # self.buildMST()
         return path
 
 
@@ -126,7 +124,7 @@ class ISPNetwork:
             for nextVert in currentVert.getConnections():
                 newDist = currentVert.getDistance() \
                           + currentVert.getWeight(nextVert)
-                if newDist < nextVert.getDistance():
+                if newDist < nextVert.getDistance() and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
                     nextVert.setDistance(newDist)
                     nextVert.setPred(currentVert)
                     pq.decreaseKey(nextVert, newDist)
@@ -174,13 +172,24 @@ if __name__ == '__main__':
     print('graph total edge weights', net.totalEdgeWeight(net.MST))
 
     print("--------- Task4 find shortest path in MST ---------")
-    # for i in range(4):
-    #     print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
-    net.MST.addVertex('asxa')
-    net.MST.addVertex('')
-    net.MST.addEdge('asxa','GenevaSwitzerland250', 5 )
-    print(net.MST.getVertex('asxa'))
-    print(net.findPath('asxa', 'GenevaSwitzerland250'))
+    for i in range(4):
+        print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
+    # net.MST.addVertex('a')
+    # a = net.MST.getVertex('a')
+    # net.MST.addVertex('b')
+    # b = net.MST.getVertex('b')
+    # net.MST.addVertex('c')
+    # c = net.MST.getVertex('c')
+    # net.MST.addVertex('d')
+    # # d = net.MST.getVertex('d')
+    # net.MST.getVertex('a').setPred(b)
+    # net.MST.getVertex('b').setPred(c)
+    # net.MST.getVertex('c').setPred(a)
+    # # net.MST.getVertex('d').setPred(b)
+    #
+    #
+    # print(net.MST.getVertex('asxa'))
+    # print(net.findPath('a', 'd'))
 
 
     print("--------- Task5 find shortest path in original graph ---------")
