@@ -36,7 +36,7 @@ class ISPNetwork:
         if self.MST is not None:
             for i in self.MST:
                 i.setColor('white')
-                i.setDistance(sys.maxsize)
+                # i.setDistance(sys.maxsize)
 
     def testPath(self, start, checkId):
         vertQueue = Queue()
@@ -177,8 +177,9 @@ if __name__ == '__main__':
     # for i in range(4):
     #     print(routers[i], routers[i + 1], 'Path:', net.findPath(routers[i], routers[i + 1]))
     net.MST.addVertex('asxa')
+    net.MST.addVertex('')
     print(net.MST.getVertex('asxa'))
-    print(net.findPath('asxa', 'GenevaSwitzerland250'))
+    print(net.findPath('', 'GenevaSwitzerland250'))
 
 
     print("--------- Task5 find shortest path in original graph ---------")
