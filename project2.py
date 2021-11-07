@@ -92,7 +92,6 @@ class ISPNetwork:
             l.append(r2.getId())
             r2 = r2.getPred()
         l.append(r2.getId())
-        self.buildMST()
         self.resetMST()
         if router1 in l:
             l.reverse()
