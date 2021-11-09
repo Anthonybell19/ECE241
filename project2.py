@@ -136,22 +136,26 @@ class ISPNetwork:
 
 
 
-    def modifiedDijkstra(self, aGraph, start, weight):
+    def findMaxWeight(self, aGraph, start):
+        weight = 0
         pq = PriorityQueue()
         start.setDistance(0)
         pq.buildHeap([(v.getDistance(), v) for v in aGraph])
         while not pq.isEmpty():
             currentVert = pq.delMin()
             for nextVert in currentVert.getConnections():
-                if  currentVert.getWeight(nextVert) > weight:
-                    weight =  currentVert.getWeight(nextVert)
                 newDist = currentVert.getDistance() \
                           + currentVert.getWeight(nextVert)
                 if newDist < nextVert.getDistance() and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
                     nextVert.setDistance(newDist)
                     nextVert.setPred(currentVert)
                     pq.decreaseKey(nextVert, newDist)
-        return weight
+                    if currentVert.getWeight(nextVert) > weight:
+                        weight = currentVert.getWeight(nextVert)
+                        vert = nextVert
+                        print('got here')
+
+        return weight, vert
 
 
 
@@ -197,17 +201,18 @@ class ISPNetwork:
         path = ''
         r1 = self.MST.getVertex(router1)
         if self.MST is not None and r1 is not None:
-           w = self.modifiedDijkstra(self.MST, r1,0)
-        r2 = self.MST.getVertex(router2)
-        if r2 is None:
-            return 'path does not exist 1'
-        while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
-            r2.setColor('black')
-            l.append(r2.getId())
-            if r2.getPred() is not None:
-                r2 = r2.getPred()
-        if r2 is not None:
-            l.append(r2.getId())
+            w, v = self.findMaxWeight(self.MST, r1)
+            print(v.getId())
+            print(w)
+        while v is not None and v.getPred() is not None and v.getColor() == 'white' and v.getId() != router1:
+            v.setColor('black')
+            if v.getPred() is not None:
+                l.append(v.getId())
+                v = v.getPred()
+        # if r2 is not None:
+        #     l.append(r2.getWeight(r2.getPred()))
+        print(l)
+
         if router1 in l:
             l.reverse()
             for i in l:
@@ -237,7 +242,7 @@ if __name__ == '__main__':
     print("--------- Task1 build graph ---------")
     # Note: You should try all six dataset. This is just a example using 1221.csv
     net = ISPNetwork()
-    net.buildGraph('data/3257.csv')
+    net.buildGraph('data/1755.csv')
 
     print("--------- Task2 check if path exists ---------")
     routers = [v.id for v in random.sample(list(net.network.vertList.values()), 5)]
@@ -279,6 +284,6 @@ if __name__ == '__main__':
         print(routers[i], routers[i + 1], 'Path:', net.findForwardingPath(routers[i], routers[i + 1]))
 
     print("--------- Task6 find path in LowestMaxWeightFirst algorithm ---------")
-    for i in range(4):
-        print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))
-    # print(net.findPathMaxWeight("New+YorkNY241", "New+YorkNY159"))
+    # for i in range(4):
+    #     print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))
+    print(net.findPathMaxWeight("LondonUnitedKingdom209", "ParisFrance193"))
