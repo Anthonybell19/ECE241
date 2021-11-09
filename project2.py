@@ -213,7 +213,8 @@ class ISPNetwork:
                 else:
                     path = path + i + ' (' + str(w) + ')'
         else:
-            path = 'path not exist'
+            for i in l:
+                path += str(i)
 
         self.resetMST()
         # self.buildMST()
@@ -276,6 +277,6 @@ if __name__ == '__main__':
         print(routers[i], routers[i + 1], 'Path:', net.findForwardingPath(routers[i], routers[i + 1]))
 
     print("--------- Task6 find path in LowestMaxWeightFirst algorithm ---------")
-    # for i in range(4):
-        # print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))
-    print(net.findPathMaxWeight("New+YorkNY241", "New+YorkNY159"))
+    for i in range(4):
+        print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))
+    # print(net.findPathMaxWeight("New+YorkNY241", "New+YorkNY159"))
