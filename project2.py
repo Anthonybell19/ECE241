@@ -205,6 +205,8 @@ class ISPNetwork:
             r2 = r2.getPred()
         if r2 is not None:
             l.append(r2.getId())
+        if r2 is None:
+            return 'path does not exist 1'
         if router1 in l:
             l.reverse()
             for i in l:
@@ -213,8 +215,7 @@ class ISPNetwork:
                 else:
                     path = path + i + ' (' + str(w) + ')'
         else:
-            for i in l:
-                path += str(i)
+            path = 'path not exist'
 
         self.resetMST()
         # self.buildMST()
