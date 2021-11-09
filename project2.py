@@ -199,6 +199,8 @@ class ISPNetwork:
         if self.MST is not None and r1 is not None:
            w = self.modifiedDijkstra(self.MST, r1,0)
         r2 = self.MST.getVertex(router2)
+        if r2 is None:
+            return 'path does not exist 1'
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             l.append(r2.getId())
@@ -206,8 +208,6 @@ class ISPNetwork:
                 r2 = r2.getPred()
         if r2 is not None:
             l.append(r2.getId())
-        if r2 is None:
-            return 'path does not exist 1'
         if router1 in l:
             l.reverse()
             for i in l:
