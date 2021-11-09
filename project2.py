@@ -202,7 +202,8 @@ class ISPNetwork:
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             l.append(r2.getId())
-            r2 = r2.getPred()
+            if r2.getPred() is not None:
+                r2 = r2.getPred()
         if r2 is not None:
             l.append(r2.getId())
         if r2 is None:
