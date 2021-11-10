@@ -190,7 +190,8 @@ class ISPNetwork:
                     weight = r2.getWeight(r2.getPred())
                 r2 = r2.getPred()
         # print(wVert.getId())
-        l.append(r1.getId())
+        if r1 is not None:
+            l.append(r1.getId())
         l.reverse()
         print(l)
         if router1 in l:
