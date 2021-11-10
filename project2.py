@@ -136,30 +136,6 @@ class ISPNetwork:
 
 
 
-    def findMaxWeight(self, aGraph, start):
-        weight = 0
-        pq = PriorityQueue()
-        start.setDistance(0)
-        pq.buildHeap([(v.getDistance(), v) for v in aGraph])
-        while not pq.isEmpty():
-            currentVert = pq.delMin()
-            for nextVert in currentVert.getConnections():
-                newDist = currentVert.getDistance() \
-                          + currentVert.getWeight(nextVert)
-                if newDist < nextVert.getDistance() and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
-                    nextVert.setDistance(newDist)
-                    nextVert.setPred(currentVert)
-                    pq.decreaseKey(nextVert, newDist)
-                    if currentVert.getWeight(nextVert) > weight:
-                        weight = currentVert.getWeight(nextVert)
-                        vert = nextVert
-                        print('got here')
-
-        return weight, vert
-
-
-
-
 
 
 
@@ -199,27 +175,49 @@ class ISPNetwork:
     def findPathMaxWeight(self, router1, router2):
         l = []
         path = ''
+        weight = 0
+        wVert = Vertex('')
         r1 = self.MST.getVertex(router1)
         if self.MST is not None and r1 is not None:
-            w, v = self.findMaxWeight(self.MST, r1)
-            print(v.getId())
-            print(w)
-        while v is not None and v.getPred() is not None and v.getColor() == 'white' and v.getId() != router1:
-            v.setColor('black')
-            if v.getPred() is not None:
-                l.append(v.getId())
-                v = v.getPred()
-        # if r2 is not None:
-        #     l.append(r2.getWeight(r2.getPred()))
+            self.dijkstra(self.MST, r1)
+        r2 = self.MST.getVertex(router2)
+        while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
+            r2.setColor('black')
+            if r2.getPred() is not None:
+                if r2.getWeight(r2.getPred()) > weight:
+                    weight = r2.getWeight(r2.getPred())
+                    wVert = r2
+                r2 = r2.getPred()
+        self.resetMST()
+        self.moddijkstra(self.MST, wVert)
+        # tempW = 0
+        # for v in wVert.getConnections():
+        #     if wVert.getWeight(v) > tempW:
+        #         tempW = wVert.getWeight(v)
+        #         wVert.setPred(v)
+        r1 = self.MST.getVertex(router1)
+        while r1 is not None and r1.getPred() is not None and r1.getColor() == 'white' and r1.getId() != wVert.getId():
+            r1.setColor('black')
+            if r1.getPred() is not None:
+                l.append(r1.getId())
+                r1 = r1.getPred()
+        l.append(r1.getId())
         print(l)
-
+        self.resetMST()
+        self.moddijkstra(self.MST, wVert)
+        r2 = self.MST.getVertex(router2)
+        while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != wVert.getId():
+            r2.setColor('black')
+            if r2.getPred() is not None:
+                l.append(r2.getId())
+                r2 = r2.getPred()
+        print(l)
         if router1 in l:
-            l.reverse()
             for i in l:
                 if i != router2:
                     path = path + i + ' -> '
                 else:
-                    path = path + i + ' (' + str(w) + ')'
+                    path = path + i + '(' + str(weight) + ')'
         else:
             path = 'path not exist'
 
@@ -228,7 +226,21 @@ class ISPNetwork:
         return path
 
         pass
-
+    def moddijkstra(self, aGraph, start):
+        pq = PriorityQueue()
+        start.setDistance(0)
+        pq.buildHeap([(v.getDistance(), v) for v in aGraph])
+        while not pq.isEmpty():
+            currentVert = pq.delMin()
+            weight = 0
+            for nextVert in currentVert.getConnections():
+                newDist = currentVert.getDistance() \
+                          + currentVert.getWeight(nextVert)
+                if currentVert.getWeight(nextVert) > weight and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
+                    weight = currentVert.getWeight(nextVert)
+                    nextVert.setDistance(newDist)
+                    nextVert.setPred(currentVert)
+                    pq.decreaseKey(nextVert, newDist)
     @staticmethod
     def nodeEdgeWeight(v):
         return sum([w for w in v.connectedTo.values()])
