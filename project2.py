@@ -179,34 +179,19 @@ class ISPNetwork:
         wVert = Vertex('')
         r1 = self.MST.getVertex(router1)
         if self.MST is not None and r1 is not None:
-            self.dijkstra(self.MST, r1)
+            self.moddijkstra(self.MST, r1)
         r2 = self.MST.getVertex(router2)
+        print(r1.getId())
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             if r2.getPred() is not None:
+                l.append(r2.getId())
                 if r2.getWeight(r2.getPred()) > weight:
                     weight = r2.getWeight(r2.getPred())
-                    wVert = r2
                 r2 = r2.getPred()
-        self.resetMST()
-        self.moddijkstra(self.MST, wVert)
-        r1 = self.MST.getVertex(router1)
-        while r1 is not None and r1.getPred() is not None and r1.getColor() == 'white' and r1.getId() != wVert.getId():
-            r1.setColor('black')
-            if r1.getPred() is not None:
-                l.append(r1.getId())
-                r1 = r1.getPred()
-        if r1 is not None:
-            l.append(r1.getId())
-        print(l)
-        self.resetMST()
-        self.moddijkstra(self.MST, wVert)
-        r2 = self.MST.getVertex(router2)
-        while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != wVert.getId():
-            r2.setColor('black')
-            if r2.getPred() is not None:
-                l.append(r2.getId())
-                r2 = r2.getPred()
+        # print(wVert.getId())
+        l.append(r1.getId())
+        l.reverse()
         print(l)
         if router1 in l:
             for i in l:
@@ -218,7 +203,7 @@ class ISPNetwork:
             path = 'path not exist'
 
         self.resetMST()
-        # self.buildMST()
+        self.buildMST()
         return path
 
         pass
@@ -226,13 +211,18 @@ class ISPNetwork:
         pq = PriorityQueue()
         start.setDistance(0)
         pq.buildHeap([(v.getDistance(), v) for v in aGraph])
+        weight = 0
         while not pq.isEmpty():
             currentVert = pq.delMin()
-            weight = 0
             for nextVert in currentVert.getConnections():
                 newDist = currentVert.getDistance() \
                           + currentVert.getWeight(nextVert)
                 if currentVert.getWeight(nextVert) > weight and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
+                    weight = currentVert.getWeight(nextVert)
+                    nextVert.setDistance(newDist)
+                    nextVert.setPred(currentVert)
+                    pq.decreaseKey(nextVert, newDist)
+                elif newDist < nextVert.getDistance() and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
                     weight = currentVert.getWeight(nextVert)
                     nextVert.setDistance(newDist)
                     nextVert.setPred(currentVert)
@@ -294,4 +284,4 @@ if __name__ == '__main__':
     print("--------- Task6 find path in LowestMaxWeightFirst algorithm ---------")
     # for i in range(4):
     #     print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))
-    print(net.findPathMaxWeight("LondonUnitedKingdom209", "ParisFrance193"))
+    print(net.findPathMaxWeight("GenevaSwitzerland140", "CopenhagenDenmark271"))
