@@ -190,18 +190,14 @@ class ISPNetwork:
                 r2 = r2.getPred()
         self.resetMST()
         self.moddijkstra(self.MST, wVert)
-        # tempW = 0
-        # for v in wVert.getConnections():
-        #     if wVert.getWeight(v) > tempW:
-        #         tempW = wVert.getWeight(v)
-        #         wVert.setPred(v)
         r1 = self.MST.getVertex(router1)
         while r1 is not None and r1.getPred() is not None and r1.getColor() == 'white' and r1.getId() != wVert.getId():
             r1.setColor('black')
             if r1.getPred() is not None:
                 l.append(r1.getId())
                 r1 = r1.getPred()
-        l.append(r1.getId())
+        if r1 is not None:
+            l.append(r1.getId())
         print(l)
         self.resetMST()
         self.moddijkstra(self.MST, wVert)
