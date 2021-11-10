@@ -176,12 +176,10 @@ class ISPNetwork:
         l = []
         path = ''
         weight = 0
-        wVert = Vertex('')
         r1 = self.MST.getVertex(router1)
         if self.MST is not None and r1 is not None:
             self.moddijkstra(self.MST, r1)
         r2 = self.MST.getVertex(router2)
-        print(r1.getId())
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             if r2.getPred() is not None:
@@ -193,7 +191,6 @@ class ISPNetwork:
         if r1 is not None:
             l.append(r1.getId())
         l.reverse()
-        print(l)
         if router1 in l:
             for i in l:
                 if i != router2:
