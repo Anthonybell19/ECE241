@@ -1,4 +1,3 @@
-
 from Graph import *
 import random
 
@@ -34,7 +33,6 @@ class ISPNetwork:
                     i.setDistance(sys.maxsize)
                     i.setPred(None)
 
-
     def resetMST(self):
         if self.MST is not None:
             for i in self.MST:
@@ -58,9 +56,8 @@ class ISPNetwork:
                 currentVert.setColor('black')
         return False
 
-
     def buildMST(self):
-        self.MST= Graph()
+        self.MST = Graph()
         tempGraph = self.network
         d = [*tempGraph.getVertices()]
         self.prim(tempGraph, tempGraph.getVertex(d[0]))
@@ -74,15 +71,15 @@ class ISPNetwork:
         pass
 
     def prim(self, G, start):
-        pq = PriorityQueue() #queue to hold verts to be explored
+        pq = PriorityQueue()  # queue to hold verts to be explored
         for v in G:
             v.setDistance(sys.maxsize)
             v.setPred(None)
         start.setDistance(0)
-        pq.buildHeap([(v.getDistance(), v) for v in G]) # build heap of all verts
+        pq.buildHeap([(v.getDistance(), v) for v in G])  # build heap of all verts
         while not pq.isEmpty():
-            currentVert = pq.delMin() # starting vert
-            for nextVert in currentVert.getConnections(): # grabbing all neighbors of current vert
+            currentVert = pq.delMin()  # starting vert
+            for nextVert in currentVert.getConnections():  # grabbing all neighbors of current vert
                 newCost = currentVert.getWeight(nextVert)
                 if nextVert in pq and newCost < nextVert.getDistance():
                     nextVert.setPred(currentVert)
@@ -110,15 +107,11 @@ class ISPNetwork:
                 else:
                     path = path + i
         else:
-            path ='path not exist'
+            path = 'path not exist'
 
         self.resetMST()
         # self.buildMST()
         return path
-
-
-
-
 
     def dijkstra(self, aGraph, start):
         pq = PriorityQueue()
@@ -133,11 +126,6 @@ class ISPNetwork:
                     nextVert.setDistance(newDist)
                     nextVert.setPred(currentVert)
                     pq.decreaseKey(nextVert, newDist)
-
-
-
-
-
 
     def findForwardingPath(self, router1, router2):
         l = []
@@ -183,13 +171,14 @@ class ISPNetwork:
         r2 = self.network.getVertex(router2)
         if r2 is None:
             return 'error 2'
+        self.resetNetworkColors()
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             if r2.getPred() is not None:
                 l.append(r2.getId())
                 r2 = r2.getPred()
-        if r2.getColor() =='black':
-            return'error 3'
+        if r2.getColor() == 'black':
+            return 'error 3'
         l.append(r2.getId())
         l.reverse()
         if router1 in l:
@@ -215,6 +204,13 @@ class ISPNetwork:
                     nextVert.setDistance(newDist)
                     nextVert.setPred(currentVert)
                     pq.decreaseKey(nextVert, newDist)
+
+    def resetNetworkColors(self):
+        if self.network is not None:
+            for i in self.network:
+                if i is not None:
+                    i.setColor('white')
+
     @staticmethod
     def nodeEdgeWeight(v):
         return sum([w for w in v.connectedTo.values()])
@@ -235,9 +231,6 @@ if __name__ == '__main__':
     for i in range(4):
         print('Router1:', routers[i], ', Router2:', routers[i + 1], 'path exist?:',
               net.pathExist(routers[i], routers[i + 1]))
-
-
-
 
     print("--------- Task3 build MST ---------")
     net.buildMST()
@@ -263,7 +256,6 @@ if __name__ == '__main__':
     #
     # print(net.MST.getVertex('asxa'))
     # print(net.findPath('a', 'd'))
-
 
     print("--------- Task5 find shortest path in original graph ---------")
     for i in range(4):
