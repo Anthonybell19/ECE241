@@ -172,7 +172,8 @@ class ISPNetwork:
             if r2.getPred() is not None:
                 l.append(r2.getId())
                 r2 = r2.getPred()
-        l.append(r2.getId())
+        if r2 is not None:
+            l.append(r2.getId())
         l.reverse()
         if router1 in l and router2 in l:
             for i in l:
