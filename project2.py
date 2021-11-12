@@ -180,7 +180,6 @@ class ISPNetwork:
         if self.network is not None and r1 is not None:
             self.moddijkstra(self.network, r1)
         r2 = self.network.getVertex(router2)
-        print(r2.getPred())
         while link and r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             if r2.getPred() is not None:
