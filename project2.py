@@ -175,20 +175,16 @@ class ISPNetwork:
     def findPathMaxWeight(self, router1, router2):
         l = []
         path = ''
-        link = self.pathExist(router1, router2)
-        if link is False:
-            return 'error 1 '
         r1 = self.network.getVertex(router1)
         if self.network is not None and r1 is not None:
             self.moddijkstra(self.network, r1)
         r2 = self.network.getVertex(router2)
-        while link and r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
+        while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             if r2.getPred() is not None:
                 l.append(r2.getId())
                 r2 = r2.getPred()
-        if r1 is not None:
-            l.append(r1.getId())
+        l.append(r2.getId())
         l.reverse()
         if router1 in l:
             for i in l:
