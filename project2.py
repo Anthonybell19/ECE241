@@ -184,8 +184,6 @@ class ISPNetwork:
             r2.setColor('black')
             if r2.getPred() is not None:
                 l.append(r2.getId())
-                if r2.getWeight(r2.getPred()) > weight:
-                    weight = r2.getWeight(r2.getPred())
                 r2 = r2.getPred()
         if r1 is not None:
             l.append(r1.getId())
@@ -195,7 +193,7 @@ class ISPNetwork:
                 if i != router2:
                     path = path + i + ' -> '
                 else:
-                    path = path + i + '(' + str(weight) + ')'
+                    path = path + i
         else:
             path = 'path not exist'
 
@@ -203,17 +201,22 @@ class ISPNetwork:
 
         pass
     def moddijkstra(self, aGraph, start):
+        weights = []
+        maxw = 0
         pq = PriorityQueue()
         start.setDistance(0)
         pq.buildHeap([(v.getDistance(), v) for v in aGraph])
-        weight = 0
         while not pq.isEmpty():
             currentVert = pq.delMin()
             for nextVert in currentVert.getConnections():
+                tempVert = nextVert
                 newDist = currentVert.getDistance() \
                           + currentVert.getWeight(nextVert)
-                if currentVert.getWeight(nextVert) > weight and newDist > nextVert.getDistance() and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
-                    weight = currentVert.getWeight(nextVert)
+                while tempVert.getPred():
+                    weights.append(tempVert.getWeight(tempVert.getPred()))
+                    tempVert = tempVert.getPred()
+                    maxw = max(weights)
+                if currentVert.getDistance() - maxw == currentVert.getWeight(nextVert)  and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
                     nextVert.setDistance(newDist)
                     nextVert.setPred(currentVert)
                     pq.decreaseKey(nextVert, newDist)
