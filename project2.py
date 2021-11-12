@@ -181,7 +181,7 @@ class ISPNetwork:
             return 'error 3'
         l.append(r2.getId())
         l.reverse()
-        if router1 in l:
+        if router1 in l and router2 in l:
             for i in l:
                 if i != router2:
                     path = path + i + ' -> '
@@ -189,7 +189,7 @@ class ISPNetwork:
                     path = path + i
         else:
             path = 'path not exist'
-
+        self.resetNetwork()
         return path
 
     def moddijkstra(self, aGraph, start):
@@ -224,7 +224,7 @@ if __name__ == '__main__':
     print("--------- Task1 build graph ---------")
     # Note: You should try all six dataset. This is just a example using 1221.csv
     net = ISPNetwork()
-    net.buildGraph('data/3967.csv')
+    net.buildGraph('data/1755.csv')
 
     print("--------- Task2 check if path exists ---------")
     routers = [v.id for v in random.sample(list(net.network.vertList.values()), 5)]
@@ -264,4 +264,4 @@ if __name__ == '__main__':
     print("--------- Task6 find path in LowestMaxWeightFirst algorithm ---------")
     # for i in range(4):
     #     print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))
-    print(net.findPathMaxWeight("Oak+BrookIL300", "Palo+AltoCA318"))
+    print(net.findPathMaxWeight("ViennaAustria123", "FrankfurtGermany168"))
