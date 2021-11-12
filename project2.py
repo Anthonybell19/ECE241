@@ -201,30 +201,17 @@ class ISPNetwork:
 
         pass
     def moddijkstra(self, aGraph, start):
-        weights = []
-        maxw = 0
         pq = PriorityQueue()
         start.setDistance(0)
         pq.buildHeap([(v.getDistance(), v) for v in aGraph])
         while not pq.isEmpty():
             currentVert = pq.delMin()
             for nextVert in currentVert.getConnections():
-                tempVert = nextVert
-                newDist = currentVert.getDistance() \
-                          + currentVert.getWeight(nextVert)
-                while tempVert.getPred():
-                    weights.append(tempVert.getWeight(tempVert.getPred()))
-                    tempVert = tempVert.getPred()
-                    maxw = max(weights)
-                if currentVert.getDistance() - maxw == currentVert.getWeight(nextVert)  and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
+                newDist = max(currentVert.getDistance(), currentVert.getWeight(nextVert))
+                if newDist < nextVert.getDistance() and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
                     nextVert.setDistance(newDist)
                     nextVert.setPred(currentVert)
                     pq.decreaseKey(nextVert, newDist)
-                elif newDist < nextVert.getDistance() and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
-                    nextVert.setDistance(newDist)
-                    nextVert.setPred(currentVert)
-                    pq.decreaseKey(nextVert, newDist)
-
     @staticmethod
     def nodeEdgeWeight(v):
         return sum([w for w in v.connectedTo.values()])
@@ -238,7 +225,7 @@ if __name__ == '__main__':
     print("--------- Task1 build graph ---------")
     # Note: You should try all six dataset. This is just a example using 1221.csv
     net = ISPNetwork()
-    net.buildGraph('data/3967.csv')
+    net.buildGraph('data/6461.csv')
 
     print("--------- Task2 check if path exists ---------")
     routers = [v.id for v in random.sample(list(net.network.vertList.values()), 5)]
@@ -282,4 +269,4 @@ if __name__ == '__main__':
     print("--------- Task6 find path in LowestMaxWeightFirst algorithm ---------")
     # for i in range(4):
     #     print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))
-    print(net.findPathMaxWeight("London276", "El+SegundoCA163"))
+    print(net.findPathMaxWeight("Tokyo557", "Los+AngelesCA559"))
