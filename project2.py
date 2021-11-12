@@ -175,12 +175,12 @@ class ISPNetwork:
     def findPathMaxWeight(self, router1, router2):
         l = []
         path = ''
-        weight = 0
         r1 = self.network.getVertex(router1)
         if self.network is not None and r1 is not None:
             self.moddijkstra(self.network, r1)
         r2 = self.network.getVertex(router2)
-        while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
+        link = self.pathExist(router1, router2)
+        while link and r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
             if r2.getPred() is not None:
                 l.append(r2.getId())
@@ -269,4 +269,4 @@ if __name__ == '__main__':
     print("--------- Task6 find path in LowestMaxWeightFirst algorithm ---------")
     # for i in range(4):
     #     print(routers[i], routers[i + 1], 'Path:', net.findPathMaxWeight(routers[i], routers[i + 1]))
-    print(net.findPathMaxWeight("Tokyo557", "Los+AngelesCA559"))
+    print(net.findPathMaxWeight("", "Los+AngelesCA559"))
