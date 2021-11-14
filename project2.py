@@ -11,18 +11,18 @@ class ISPNetwork:
     def buildGraph(self, filename):
         graph = Graph()
         file = open(filename, 'r')
-        info = file.readlines()
+        info = file.readlines() # get the information from the file
         for i in info:
             l = i.split(',')
             w = l[2].split('\n')
             weight = float(w[0])
-            graph.addEdge(l[0], l[1], weight)
+            graph.addEdge(l[0], l[1], weight) # create vertexes and edges in graph
         self.network = graph
 
     def pathExist(self, router1, route2):
         r1 = self.network.getVertex(router1)
-        b = self.testPath(r1, route2)
-        self.resetNetwork()
+        b = self.testPath(r1, route2) # use test path function and return its value
+        self.resetNetwork() # reset modified values in network
         return b
 
     def resetNetwork(self):
@@ -30,7 +30,7 @@ class ISPNetwork:
             for i in self.network:
                 if i is not None:
                     i.setColor('white')
-                    i.setDistance(sys.maxsize)
+                    i.setDistance(sys.maxsize) # reset all of the modified values for the Network graph
                     i.setPred(None)
 
     def resetMST(self):
@@ -38,7 +38,7 @@ class ISPNetwork:
             for i in self.MST:
                 if i is not None:
                     i.setColor('white')
-                    i.setDistance(sys.maxsize)
+                    i.setDistance(sys.maxsize) # reset all of the modified values for the MST
                     i.setPred(None)
 
     def testPath(self, start, checkId):
@@ -47,24 +47,24 @@ class ISPNetwork:
         while vertQueue.size() > 0:
             currentVert = vertQueue.dequeue()
             if currentVert is not None:
-                for nbr in currentVert.getConnections():
+                for nbr in currentVert.getConnections(): # use BFS to find path
                     if nbr.getColor() == 'white':
                         if nbr.getId() == checkId:
-                            return True
+                            return True # return True if finds the vertex id in BFS
                         nbr.setColor('gray')
                         vertQueue.enqueue(nbr)
                 currentVert.setColor('black')
         return False
 
     def buildMST(self):
-        self.MST = Graph()
-        tempGraph = self.network
+        self.MST = Graph() # set MST to a temporary empty graph
+        tempGraph = self.network # create a clone of network which will be modified
         d = [*tempGraph.getVertices()]
         self.prim(tempGraph, tempGraph.getVertex(d[0]))
         for vert in tempGraph:
             for neighbor in vert.getConnections():
                 if neighbor.getPred() == vert:
-                    # create mst with bi-directional edges
+                    # create mst with bi-directional edges and a minimum spanning tree
                     self.MST.addEdge(neighbor.getId(), vert.getId(), vert.getWeight(neighbor))
                     self.MST.addEdge(vert.getId(), neighbor.getId(), vert.getWeight(neighbor))
 
@@ -91,14 +91,14 @@ class ISPNetwork:
         path = ''
         r1 = self.MST.getVertex(router1)
         if self.MST is not None and r1 is not None:
-            self.dijkstra(self.MST, r1)
+            self.dijkstra(self.MST, r1) # run dijkstra between the two nodes and set predecessors
         r2 = self.MST.getVertex(router2)
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
-            l.append(r2.getId())
+            l.append(r2.getId()) # append path between two nodes to a list
             r2 = r2.getPred()
         if r2 is not None:
-            l.append(r2.getId())
+            l.append(r2.getId()) # if while loop was jumped out of, add starting vertex to list
         if router1 in l:
             l.reverse()
             for i in l:
@@ -109,8 +109,7 @@ class ISPNetwork:
         else:
             path = 'path not exist'
 
-        self.resetMST()
-        # self.buildMST()
+        self.resetMST() # reset modified vertex values
         return path
 
     def dijkstra(self, aGraph, start):
@@ -123,6 +122,7 @@ class ISPNetwork:
                 newDist = currentVert.getDistance() \
                           + currentVert.getWeight(nextVert)
                 if newDist < nextVert.getDistance() and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
+                    # set up variables for dijkstra, ensure there are no loops in the graph
                     nextVert.setDistance(newDist)
                     nextVert.setPred(currentVert)
                     pq.decreaseKey(nextVert, newDist)
@@ -132,18 +132,16 @@ class ISPNetwork:
         weight = 0
         path = ''
         r1 = self.network.getVertex(router1)
-        if r1 is not None:
-            neighbors = r1.getConnections()
         if self.network is not None and r1 is not None:
-            self.dijkstra(self.network, r1)
+            self.dijkstra(self.network, r1) # use dijkstras to set up path values between two vertexes
         r2 = self.network.getVertex(router2)
         while r2 is not None and r2.getPred() is not None and r2.getColor() == 'white' and r2.getId() != router1:
             r2.setColor('black')
-            l.append(r2.getId())
-            weight += r2.getWeight(r2.getPred())
+            l.append(r2.getId()) # append the path to a list
+            weight += r2.getWeight(r2.getPred()) # get total weight along the path
             r2 = r2.getPred()
         if r2 is not None:
-            l.append(r2.getId())
+            l.append(r2.getId()) # if while loop was jumped out of, add starting vertex to list
         if router1 in l:
             l.reverse()
             for i in l:
@@ -154,8 +152,7 @@ class ISPNetwork:
         else:
             path = 'path not exist'
 
-        self.resetNetwork()
-        # self.buildMST()
+        self.resetNetwork() # reset modified vertex values
         return path
 
         pass
@@ -194,16 +191,12 @@ class ISPNetwork:
             currentVert = pq.delMin()
             for nextVert in currentVert.getConnections():
                 newDist = max(currentVert.getDistance(), currentVert.getWeight(nextVert))
+                # new distance value, use the weight of edge if it's greater than distance of current vertex
                 if newDist < nextVert.getDistance() and nextVert.getPred() != currentVert and currentVert.getPred() != nextVert:
                     nextVert.setDistance(newDist)
                     nextVert.setPred(currentVert)
                     pq.decreaseKey(nextVert, newDist)
 
-    def resetNetworkColors(self):
-        if self.network is not None:
-            for i in self.network:
-                if i is not None:
-                    i.setColor('white')
 
     @staticmethod
     def nodeEdgeWeight(v):
