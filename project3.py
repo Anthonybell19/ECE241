@@ -63,20 +63,72 @@ class HousePrices:
             TotalBsmtSf.append(float(tempList[8]))
             FullBath.append(float(tempList[14]))
 
-        # plt.scatter(GrLivArea,BedroomAbvGr,TotalBsmtSf, FullBath, )
-        plt.hist(self.priceList, bins='auto', range = (self.minPrice, self.maxPrice))
-        fig, ax = plt.subplots(2, 3, sharex='col', sharey='row')
+
+        plt.hist(self.priceList, bins='auto', range = (self.minPrice, self.maxPrice), )
+        plt.gca().set(title='Number of Houses per Price', ylabel='Number of Houses', xlabel='Price');
+
+        fig, ax = plt.subplots(4, 3, sharex='col', sharey='row')
+
         ax[0,0].scatter(GrLivArea, BedroomAbvGr)
         ax[0,0].set_xlabel('GrLivArea')
         ax[0, 0].set_ylabel('BedroomAbvGr')
+
         ax[0, 1].scatter(GrLivArea, TotalBsmtSf)
+        ax[0, 1].set_xlabel('GrLivArea')
+        ax[0, 1].set_ylabel('TotalBsmtSf')
+
         ax[0, 2].scatter(GrLivArea, FullBath)
-        ax[1, 0].scatter(BedroomAbvGr, TotalBsmtSf)
-        ax[1, 1].scatter(BedroomAbvGr, FullBath)
-        ax[1, 2].scatter(TotalBsmtSf, FullBath)
+        ax[0, 2].set_xlabel('GrLivArea')
+        ax[0, 2].set_ylabel('FullBath')
+
+
+        ax[1, 0].scatter(BedroomAbvGr, GrLivArea)
+        ax[1, 0].set_xlabel('BedroomAbvGr')
+        ax[1, 0].set_ylabel('GrLivArea')
+
+        ax[1, 1].scatter(BedroomAbvGr, TotalBsmtSf)
+        ax[1, 1].set_xlabel('BedroomAbvGr')
+        ax[1, 1].set_ylabel('TotalBsmtSf')
+
+        ax[1, 2].scatter(BedroomAbvGr, FullBath)
+        ax[1, 2].set_xlabel('BedroomAbvGr')
+        ax[1, 2].set_ylabel('FullBath')
+
+
+        ax[2, 0].scatter(FullBath, BedroomAbvGr)
+        ax[2, 0].set_xlabel('FullBath')
+        ax[2, 0].set_ylabel('BedroomAbvGr')
+
+        ax[2, 1].scatter(FullBath, TotalBsmtSf)
+        ax[2, 1].set_xlabel('FullBath')
+        ax[2, 1].set_ylabel('TotalBsmtSf')
+
+        ax[2, 2].scatter(FullBath,  GrLivArea)
+        ax[2, 2].set_xlabel('FullBath')
+        ax[2, 2].set_ylabel('GrLivArea')
+
+
+        ax[3, 0].scatter(TotalBsmtSf, BedroomAbvGr)
+        ax[3, 0].set_xlabel('TotalBsmtSf')
+        ax[3, 0].set_ylabel('BedroomAbvGr')
+
+        ax[3, 1].scatter(TotalBsmtSf,  FullBath)
+        ax[3, 1].set_xlabel('TotalBsmtSf')
+        ax[3, 1].set_ylabel('FullBath')
+
+        ax[3, 2].scatter(TotalBsmtSf,  GrLivArea)
+        ax[3, 2].set_xlabel('TotalBsmtSf')
+        ax[3, 2].set_ylabel('GrLivArea')
+
+
+
+
+
+
+
 
         plt.show()
-        plt.gca().set(title='Price Histogram', ylabel='Price');
+
         # plt.show()
 
     def pred(self):
@@ -95,13 +147,12 @@ class HousePrices:
         for i in range(0, len(self.priceList)):
             loss += (self.priceList[i] - self.predPriceList[i])**2
         self.lossValue = loss / self.totalRecords
+
     def gradient(self):
         gradient = np.zeros(26)
-        gradient[0] = 1
-        for i in range(1, len(gradient)):
-            gradient[i] = self.weights[i] * self.lossValue
-        gradient = gradient / (2 * self.totalRecords)
-        self.gradient = gradient
+        for i in range(0, len(gradient)):
+            gradient[i] = 2/self.totalRecords * np.tranpose(self.data)*(self.predPriceList[i]-self.priceList[i])
+
         print(gradient)
     def update(self):
         for i in range(1, len(self.weights)):
