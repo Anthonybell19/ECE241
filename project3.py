@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 
 class HousePrices:
     def __init__(self):
-        self.data = []
-        self.weights = np.ones(26)
-        self.gradientArray = []
+        self.data = np.array(0)
+        self.weights = np.ones(27)
+        self.gradientArray = np.zeros([1,27])
         self.priceList = []
         self.predPriceList = []
         self.totalRecords = 0
@@ -38,7 +38,7 @@ class HousePrices:
         standardDev = np.std(priceList)
         mean = mean / totalRecords
         self.priceList = priceList
-        self.data = infoList
+        self.data = np.array(infoList)
         self.mean = mean
         self.maxPrice = maxPrice
         self.minPrice = minPrice
@@ -136,7 +136,7 @@ class HousePrices:
         for i in self.data:
             price = 0
             features = i.split(',')
-            for j in range(1,len(features)-1):
+            for j in range(0,len(self.weights)-1):
                 featureWeight = float(features[j]) * self.weights[j]
                 price += featureWeight
             predPriceList.append(price)
@@ -149,23 +149,34 @@ class HousePrices:
         self.lossValue = loss / self.totalRecords
 
     def gradient(self):
-        gradient = np.zeros(26)
-        for i in range(0, len(gradient)):
-            gradient[i] = 2/self.totalRecords * np.tranpose(self.data)*(self.predPriceList[i]-self.priceList[i])
+        newData = np.zeros([818, 27])
+        newPriceList = []
+        for i  in range(0, len(self.priceList)):
+            newPriceList.append(self.predPriceList[i]-self.priceList[i])
+        newPriceArray =  np.zeros([818, 1])
+        for i in range(0, len(newPriceList)):
+            newPriceArray[i] = newPriceList[i]
+        for i in range(0, len(self.data)):
+            newData[i] = self.data[i].split(',')
 
-        print(gradient)
+        gradient = 2/self.totalRecords * newData.transpose().dot(newPriceArray)
+        gradient = gradient.transpose()
+        self.gradientArray = gradient
+
+
+        # print(gradient)
     def update(self):
-        for i in range(1, len(self.weights)):
-            self.weights[i] = self.weights[i] - 0.2* self.gradient[i]
+        self.weights = self.weights - 0.2 * self.gradientArray
 
 if __name__ == '__main__':
     house = HousePrices()
     house.loadData('train.csv')
-    house.plotData()
-    house.pred()
-    print(house.predPriceList)
-    house.loss()
-    print(house.lossValue)
-    house.gradient()
-    house.update()
-    print(house.weights)
+    # house.plotData()
+    for i in range(0, 5):
+        # print(i)
+        house.pred()
+        house.loss()
+        print(house.lossValue)
+        house.gradient()
+        house.update()
+        i+=1
